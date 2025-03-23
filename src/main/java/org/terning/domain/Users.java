@@ -1,11 +1,15 @@
 package org.terning.domain;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,4 +42,9 @@ public class Users extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private State state;
 
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Notifications> notificationList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Scraps> scrapList = new ArrayList<>();
 }
