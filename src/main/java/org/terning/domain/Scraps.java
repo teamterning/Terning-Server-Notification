@@ -27,5 +27,5 @@ public class Scraps extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private Users user;
+    private Users users;
 }
