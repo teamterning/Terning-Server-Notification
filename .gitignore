@@ -162,3 +162,4 @@ gradle-app.setting
 
 ## Custom
 *.idea
+src/main/resources/application.yml
