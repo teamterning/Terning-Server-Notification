@@ -28,6 +28,20 @@ class UserNameTest {
             // Then
             assertThat(userName.value()).isEqualTo(validName);
         }
+
+        @Test
+        @DisplayName("영어 문자만으로 구성된 이름으로 만들 수 있다.")
+        void createUserNameWithAlphabetsOnly() {
+
+            // Given
+            String validName = "jsoonworld";
+
+            // When
+            UserName userName = UserName.from(validName);
+
+            // Then
+            assertThat(userName.value()).isEqualTo(validName);
+        }
     }
 
     @Nested
