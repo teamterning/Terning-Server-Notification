@@ -28,10 +28,10 @@ import org.terning.domain.enums.State;
 @Table(name = "users")
 public class User extends BaseEntity {
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Notifications> notifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Scraps> scraps = new ArrayList<>();
 
     @Id
