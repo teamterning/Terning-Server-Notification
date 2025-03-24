@@ -1,14 +1,7 @@
-package org.terning.domain;
+package org.terning.user;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
@@ -16,9 +9,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.terning.domain.Notifications;
+import org.terning.domain.Scraps;
 import org.terning.domain.common.BaseEntity;
 import org.terning.domain.enums.AuthType;
 import org.terning.domain.enums.State;
+import org.terning.user.vo.UserName;
 
 @Entity
 @Getter
@@ -38,7 +34,9 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Embedded
+    @AttributeOverride(name = "name", column = @Column(name = "name"))
+    private UserName name;
 
     private String Token;
 

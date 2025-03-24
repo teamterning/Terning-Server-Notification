@@ -16,6 +16,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.terning.domain.common.BaseEntity;
+import org.terning.user.User;
 
 @Entity
 @Getter
