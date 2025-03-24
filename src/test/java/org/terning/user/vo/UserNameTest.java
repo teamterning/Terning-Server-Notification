@@ -60,5 +60,17 @@ class UserNameTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("이름의 길이는 12자를 초과할 수 없습니다.");
         }
+
+        @Test
+        @DisplayName("이름에 공백이 포함되어 있고 전체 길이가 12자를 초과하면 예외가 발생한다")
+        void shouldThrowExceptionWhenNameExceeds12IncludingSpaces() {
+            // Given
+            String invalidName = "장순 world2 123";
+
+            // When & Then
+            assertThatThrownBy(() -> UserName.from(invalidName))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("이름의 길이는 12자를 초과할 수 없습니다.");
+        }
     }
 }
