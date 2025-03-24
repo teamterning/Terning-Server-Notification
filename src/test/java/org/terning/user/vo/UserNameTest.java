@@ -6,10 +6,29 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("유저 이름 테스트")
 class UserNameTest {
+
+    @Nested
+    @DisplayName("성공 케이스")
+    class SuccessCases {
+
+        @Test
+        @DisplayName("문자(영어, 한글)와 숫자로 구성된 이름으로 만들 수 있다.")
+        void createUserNameWithCharacterAndNumbers() {
+            // Given
+            String validName = "장순world2";
+
+            // When
+            UserName userName = UserName.from(validName);
+
+            // Then
+            assertThat(userName.value()).isEqualTo(validName);
+        }
+    }
 
     @Nested
     @DisplayName("실패 케이스")
