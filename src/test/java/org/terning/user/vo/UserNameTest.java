@@ -3,6 +3,8 @@ package org.terning.user.vo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -71,6 +73,15 @@ class UserNameTest {
             assertThatThrownBy(() -> UserName.from(invalidName))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("이름의 길이는 12자를 초과할 수 없습니다.");
+        }
+
+        @ParameterizedTest
+        @DisplayName("이름에 특수문자가 포함된 경우 예외가 발생한다")
+        @ValueSource(strings = {"jang_soon", "터닝@name", "hello#world", "test!", "name%"})
+        void shouldThrowExceptionForSpecialCharacters(String invalidName) {
+            assertThatThrownBy(() -> UserName.from(invalidName))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("이름의 구성은 문자(한글, 영어), 숫자만 가능합니다.");
         }
     }
 }
