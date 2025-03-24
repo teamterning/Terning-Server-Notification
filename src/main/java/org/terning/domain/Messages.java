@@ -25,5 +25,4 @@ public class Messages extends BaseEntity {
     private String mainMessage;
 
     private String subMessage;
-
 }

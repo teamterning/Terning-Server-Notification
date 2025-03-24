@@ -28,6 +28,12 @@ import org.terning.domain.enums.State;
 @Table(name = "users")
 public class User extends BaseEntity {
 
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Notifications> notificationList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Scraps> scrapList = new ArrayList<>();
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,10 +49,4 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private State state;
-
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Notifications> notificationList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Scraps> scrapList = new ArrayList<>();
 }

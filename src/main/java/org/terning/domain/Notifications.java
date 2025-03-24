@@ -24,12 +24,6 @@ import org.terning.domain.common.BaseEntity;
 @AllArgsConstructor
 public class Notifications extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private LocalDateTime schedule;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -38,4 +32,9 @@ public class Notifications extends BaseEntity {
     @JoinColumn(name = "message_id")
     private Messages messages;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private LocalDateTime schedule;
 }
