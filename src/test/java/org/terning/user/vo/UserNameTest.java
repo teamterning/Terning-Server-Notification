@@ -70,6 +70,20 @@ class UserNameTest {
             // Then
             assertThat(userName.value()).isEqualTo(validName);
         }
+
+        @Test
+        @DisplayName("12글자 이하의 이름을 만들 수 있다.")
+        void createUserNameWithLessThan12Characters() {
+
+            // Given
+            String validName = "123456789012";
+
+            // When
+            UserName userName = UserName.from(validName);
+
+            // Then
+            assertThat(userName.value()).isEqualTo(validName);
+        }
     }
 
     @Nested
