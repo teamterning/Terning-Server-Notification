@@ -92,5 +92,17 @@ class UserNameTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("이름의 구성은 문자(한글, 영어), 숫자만 가능합니다.");
         }
+
+        @Test
+        @DisplayName("이름에 이모지가 포함된 경우 예외가 발생한다")
+        void shouldThrowExceptionForNameWithEmoji() {
+            // Given
+            String invalidName = "장순😊";
+
+            // When & Then
+            assertThatThrownBy(() -> UserName.from(invalidName))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("이름의 구성은 문자(한글, 영어), 숫자만 가능합니다.");
+        }
     }
 }
