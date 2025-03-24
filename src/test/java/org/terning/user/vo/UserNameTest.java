@@ -42,6 +42,20 @@ class UserNameTest {
             // Then
             assertThat(userName.value()).isEqualTo(validName);
         }
+
+        @Test
+        @DisplayName("한글 문자만으로 구성된 이름으로 만들 수 있다.")
+        void createUserNameWithHangulOnly() {
+
+            // Given
+            String validName = "한글이름";
+
+            // When
+            UserName userName = UserName.from(validName);
+
+            // Then
+            assertThat(userName.value()).isEqualTo(validName);
+        }
     }
 
     @Nested
