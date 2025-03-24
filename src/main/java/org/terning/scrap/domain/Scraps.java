@@ -1,4 +1,4 @@
-package org.terning.domain;
+package org.terning.scrap.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,7 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.terning.domain.common.BaseEntity;
+import org.terning.user.domain.User;
+import org.terning.global.entity.BaseEntity;
 
 @Entity
 @Getter
