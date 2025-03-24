@@ -56,6 +56,20 @@ class UserNameTest {
             // Then
             assertThat(userName.value()).isEqualTo(validName);
         }
+
+        @Test
+        @DisplayName("숫자로만 구성된 이름으로 만들 수 있다.")
+        void createUserNameWithNumbers() {
+
+            // Given
+            String validName = "1234567890";
+
+            // When
+            UserName userName = UserName.from(validName);
+
+            // Then
+            assertThat(userName.value()).isEqualTo(validName);
+        }
     }
 
     @Nested
