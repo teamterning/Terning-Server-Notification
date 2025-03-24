@@ -29,10 +29,10 @@ import org.terning.domain.enums.State;
 public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Notifications> notificationList = new ArrayList<>();
+    private List<Notifications> notifications = new ArrayList<>();
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Scraps> scrapList = new ArrayList<>();
+    private List<Scraps> scraps = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
