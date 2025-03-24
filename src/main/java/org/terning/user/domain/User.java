@@ -18,9 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.terning.notification.domain.Notifications;
 import org.terning.global.entity.BaseEntity;
-import org.terning.user.domain.vo.AuthType;
 import org.terning.scrap.domain.Scraps;
-import org.terning.user.domain.vo.State;
 
 @Entity
 @Getter
