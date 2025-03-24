@@ -84,6 +84,20 @@ class UserNameTest {
             // Then
             assertThat(userName.value()).isEqualTo(validName);
         }
+
+        @Test
+        @DisplayName("공백을 포함하여 12글자 이하의 이름으로 만들 수 있다.")
+        void createUserNameWithLessThan12CharactersIncludingSpace() {
+
+            // Given
+            String validName = "123 567 901";
+
+            // When
+            UserName userName = UserName.from(validName);
+
+            // Then
+            assertThat(userName.value()).isEqualTo(validName);
+        }
     }
 
     @Nested
