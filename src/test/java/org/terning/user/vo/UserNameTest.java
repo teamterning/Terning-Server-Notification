@@ -83,5 +83,14 @@ class UserNameTest {
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("이름의 구성은 문자(한글, 영어), 숫자만 가능합니다.");
         }
+
+        @ParameterizedTest
+        @DisplayName("이름에 제어 문자(공백 이외)가 포함된 경우 예외가 발생한다")
+        @ValueSource(strings = {"이름\t입력", "이름\n입력", "이름\r입력", "이름\b입력"})
+        void shouldThrowExceptionForControlCharacters(String invalidName) {
+            assertThatThrownBy(() -> UserName.from(invalidName))
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessageContaining("이름의 구성은 문자(한글, 영어), 숫자만 가능합니다.");
+        }
     }
 }
