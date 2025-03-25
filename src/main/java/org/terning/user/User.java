@@ -38,7 +38,7 @@ public class User extends BaseEntity {
     @AttributeOverride(name = "name", column = @Column(name = "name"))
     private UserName name;
 
-    private String Token;
+    private String token;
 
     private boolean isPushEnable;
 
