@@ -1,4 +1,4 @@
-package org.terning.domain.common;
+package org.terning.global.entity;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
