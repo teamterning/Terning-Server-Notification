@@ -1,2 +1,1 @@
-# Terning-Server-Notification 
- 
+# Terning-Server-Notification
