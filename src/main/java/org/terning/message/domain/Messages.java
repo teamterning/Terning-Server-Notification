@@ -1,4 +1,4 @@
-package org.terning.domain;
+package org.terning.message.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.terning.domain.common.BaseEntity;
+import org.terning.global.entity.BaseEntity;
 
 @Entity
 @Getter

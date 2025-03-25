@@ -1,4 +1,4 @@
-package org.terning.domain;
+package org.terning.user.domain;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -16,9 +16,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.terning.domain.common.BaseEntity;
-import org.terning.domain.enums.AuthType;
-import org.terning.domain.enums.State;
+import org.terning.notification.domain.Notifications;
+import org.terning.global.entity.BaseEntity;
+import org.terning.scrap.domain.Scraps;
 
 @Entity
 @Getter
