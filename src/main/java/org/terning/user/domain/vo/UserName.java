@@ -1,4 +1,4 @@
-package org.terning.user.vo;
+package org.terning.user.domain.vo;
 
 import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
