@@ -1,37 +1,50 @@
 package org.terning.user.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import org.terning.user.common.failure.UserErrorCode;
 import org.terning.user.common.failure.UserException;
 
 import java.util.Arrays;
 
 public enum AccountStatus {
-    LOGGED_IN,
-    LOGGED_OUT,
-    WITHDRAWN;
+    ACTIVE("active"),
+    INACTIVE("inactive"),
+    WITHDRAWN("withdrawn");
 
-    public static AccountStatus of(String name) {
+    private final String value;
+
+    AccountStatus(String value) {
+        this.value = value;
+    }
+
+    @JsonCreator
+    public static AccountStatus from(String input) {
         return Arrays.stream(values())
-                .filter(status -> status.name().equalsIgnoreCase(name))
+                .filter(status -> status.value.equalsIgnoreCase(input))
                 .findFirst()
                 .orElseThrow(() -> new UserException(UserErrorCode.INVALID_ACCOUNT_STATUS));
     }
 
-    public static boolean isValid(String name) {
+    public static boolean isValid(String input) {
         return Arrays.stream(values())
-                .anyMatch(status -> status.name().equalsIgnoreCase(name));
+                .anyMatch(status -> status.value.equalsIgnoreCase(input));
     }
 
-    public boolean isLoggedIn() {
-        return this == LOGGED_IN;
+    public boolean isActive() {
+        return this == ACTIVE;
     }
 
-    public boolean isLoggedOut() {
-        return this == LOGGED_OUT;
+    public boolean isInactive() {
+        return this == INACTIVE;
     }
 
     public boolean isWithdrawn() {
         return this == WITHDRAWN;
     }
-}
 
+    @JsonValue
+    public String value() {
+        return value;
+    }
+}
