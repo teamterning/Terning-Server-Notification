@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import org.terning.user.domain.vo.AccountStatus;
 import org.terning.user.domain.vo.PushNotificationStatus;
 import org.terning.user.domain.vo.PushToken;
 import org.terning.user.domain.vo.UserName;
@@ -49,7 +50,7 @@ public class User extends BaseEntity {
     private AuthType authType;
 
     @Enumerated(EnumType.STRING)
-    private State state;
+    private AccountStatus accountStatus;
 
     public boolean canReceivePushNotification() {
         return pushStatus.canReceiveNotification();
@@ -61,5 +62,9 @@ public class User extends BaseEntity {
 
     public void disablePushNotification() {
         this.pushStatus = pushStatus.disable();
+    }
+
+    public boolean isActiveUser() {
+        return !accountStatus.isWithdrawn();
     }
 }
