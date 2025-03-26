@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import org.terning.user.domain.vo.PushToken;
 import org.terning.user.domain.vo.UserName;
 import org.terning.notification.domain.Notifications;
 import org.terning.global.entity.BaseEntity;
@@ -36,7 +37,9 @@ public class User extends BaseEntity {
     @AttributeOverride(name = "name", column = @Column(name = "name"))
     private UserName name;
 
-    private String token;
+    @Embedded
+    @AttributeOverride(name = "token", column = @Column(name = "token"))
+    private PushToken token;
 
     private boolean isPushEnable;
 
