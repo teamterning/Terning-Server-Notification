@@ -33,11 +33,11 @@ public class User extends BaseEntity {
     private Long id;
 
     @Embedded
-    @AttributeOverride(name = "name", column = @Column(name = "name"))
+    @AttributeOverride(name = "value", column = @Column(name = "name"))
     private UserName name;
 
     @Embedded
-    @AttributeOverride(name = "token", column = @Column(name = "token"))
+    @AttributeOverride(name = "value", column = @Column(name = "token"))
     private PushToken token;
 
     @Enumerated(EnumType.STRING)
