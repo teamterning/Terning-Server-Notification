@@ -1,4 +1,4 @@
-package org.terning.user.vo;
+package org.terning.user.domain.vo;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -7,7 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.terning.user.common.failure.UserErrorCode;
 import org.terning.user.common.failure.UserException;
-import org.terning.user.domain.vo.UserName;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
