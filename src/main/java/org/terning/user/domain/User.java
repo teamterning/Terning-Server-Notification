@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import org.terning.user.domain.vo.PushNotificationStatus;
 import org.terning.user.domain.vo.PushToken;
 import org.terning.user.domain.vo.UserName;
 import org.terning.notification.domain.Notifications;
@@ -41,11 +42,24 @@ public class User extends BaseEntity {
     @AttributeOverride(name = "token", column = @Column(name = "token"))
     private PushToken token;
 
-    private boolean isPushEnable;
+    @Enumerated(EnumType.STRING)
+    private PushNotificationStatus pushStatus;
 
     @Enumerated(EnumType.STRING)
     private AuthType authType;
 
     @Enumerated(EnumType.STRING)
     private State state;
+
+    public boolean canReceivePushNotification() {
+        return pushStatus.canReceiveNotification();
+    }
+
+    public void enablePushNotification() {
+        this.pushStatus = pushStatus.enable();
+    }
+
+    public void disablePushNotification() {
+        this.pushStatus = pushStatus.disable();
+    }
 }
