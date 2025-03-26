@@ -9,10 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import org.terning.user.domain.vo.AccountStatus;
-import org.terning.user.domain.vo.PushNotificationStatus;
-import org.terning.user.domain.vo.PushToken;
-import org.terning.user.domain.vo.UserName;
+import org.terning.user.domain.vo.*;
 import org.terning.notification.domain.Notifications;
 import org.terning.global.entity.BaseEntity;
 import org.terning.scrap.domain.Scraps;

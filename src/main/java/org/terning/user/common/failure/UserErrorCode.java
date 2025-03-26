@@ -20,10 +20,11 @@ public enum UserErrorCode implements ErrorCode {
     ALREADY_DISABLED_PUSH_NOTIFICATION(HttpStatus.BAD_REQUEST, "이미 푸시 알림이 비활성화되어 있습니다."),
 
     INVALID_ACCOUNT_STATUS(HttpStatus.BAD_REQUEST, "계정 상태는 active, inactive, withdrawn만 가능합니다."),
+
+    INVALID_AUTH_TYPE(HttpStatus.BAD_REQUEST, "인증 타입은 apple, kakao만 가능합니다."),
     ;
 
     private static final String PREFIX = "[USER ERROR] ";
-    public static final int NAME_MAX_LENGTH = 12;
 
     private final HttpStatus status;
     private final String rawMessage;
