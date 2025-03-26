@@ -1,23 +1,33 @@
 package org.terning.user.domain.vo;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import org.terning.user.common.failure.UserErrorCode;
 import org.terning.user.common.failure.UserException;
 
 import java.util.Arrays;
 
 public enum PushNotificationStatus {
-    ENABLED, DISABLED;
+    ENABLED("enabled"),
+    DISABLED("disabled");
 
-    public static PushNotificationStatus of(String name) {
+    private final String value;
+
+    PushNotificationStatus(String value) {
+        this.value = value;
+    }
+
+    @JsonCreator
+    public static PushNotificationStatus from(String input) {
         return Arrays.stream(values())
-                .filter(status -> status.name().equalsIgnoreCase(name))
+                .filter(status -> status.value.equalsIgnoreCase(input))
                 .findFirst()
                 .orElseThrow(() -> new UserException(UserErrorCode.INVALID_PUSH_STATUS));
     }
 
-    public static boolean isValid(String name) {
+    public static boolean isValid(String input) {
         return Arrays.stream(values())
-                .anyMatch(status -> status.name().equalsIgnoreCase(name));
+                .anyMatch(status -> status.value.equalsIgnoreCase(input));
     }
 
     public boolean canReceiveNotification() {
@@ -36,5 +46,10 @@ public enum PushNotificationStatus {
             throw new UserException(UserErrorCode.ALREADY_DISABLED_PUSH_NOTIFICATION);
         }
         return DISABLED;
+    }
+
+    @JsonValue
+    public String value() {
+        return value;
     }
 }
