@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.terning.user.common.failure.UserErrorCode;
+import org.terning.user.common.failure.UserException;
 import org.terning.user.domain.vo.UserName;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -113,8 +115,8 @@ class UserNameTest {
 
             // When & Then
             assertThatThrownBy(() -> UserName.from(invalidName))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("이름은 null일 수 없습니다.");
+                    .isInstanceOf(UserException.class)
+                    .hasMessageContaining(UserErrorCode.USER_NAME_NOT_NULL.getMessage());
         }
 
         @Test
@@ -125,8 +127,8 @@ class UserNameTest {
 
             // When & Then
             assertThatThrownBy(() -> UserName.from(invalidName))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("이름의 길이는 12자를 초과할 수 없습니다.");
+                    .isInstanceOf(UserException.class)
+                    .hasMessageContaining(UserErrorCode.USER_NAME_LENGTH_EXCEEDED.getMessage());
         }
 
         @Test
@@ -137,8 +139,8 @@ class UserNameTest {
 
             // When & Then
             assertThatThrownBy(() -> UserName.from(invalidName))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("이름의 길이는 12자를 초과할 수 없습니다.");
+                    .isInstanceOf(UserException.class)
+                    .hasMessageContaining(UserErrorCode.USER_NAME_LENGTH_EXCEEDED.getMessage());
         }
 
         @Test
@@ -149,8 +151,8 @@ class UserNameTest {
 
             // When & Then
             assertThatThrownBy(() -> UserName.from(invalidName))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("이름의 길이는 12자를 초과할 수 없습니다.");
+                    .isInstanceOf(UserException.class)
+                    .hasMessageContaining(UserErrorCode.USER_NAME_LENGTH_EXCEEDED.getMessage());
         }
 
         @Test
@@ -161,8 +163,8 @@ class UserNameTest {
 
             // When & Then
             assertThatThrownBy(() -> UserName.from(invalidName))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("이름의 길이는 12자를 초과할 수 없습니다.");
+                    .isInstanceOf(UserException.class)
+                    .hasMessageContaining(UserErrorCode.USER_NAME_LENGTH_EXCEEDED.getMessage());
         }
 
         @ParameterizedTest
@@ -170,8 +172,8 @@ class UserNameTest {
         @ValueSource(strings = {"jang_soon", "터닝@name", "hello#world", "test!", "name%"})
         void shouldThrowExceptionForSpecialCharacters(String invalidName) {
             assertThatThrownBy(() -> UserName.from(invalidName))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("이름의 구성은 문자(한글, 영어), 숫자만 가능합니다.");
+                    .isInstanceOf(UserException.class)
+                    .hasMessageContaining(UserErrorCode.INVALID_USER_NAME.getMessage());
         }
 
         @ParameterizedTest
@@ -179,8 +181,8 @@ class UserNameTest {
         @ValueSource(strings = {"이름\t입력", "이름\n입력", "이름\r입력", "이름\b입력"})
         void shouldThrowExceptionForControlCharacters(String invalidName) {
             assertThatThrownBy(() -> UserName.from(invalidName))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("이름의 구성은 문자(한글, 영어), 숫자만 가능합니다.");
+                    .isInstanceOf(UserException.class)
+                    .hasMessageContaining(UserErrorCode.INVALID_USER_NAME.getMessage());
         }
 
         @Test
@@ -191,8 +193,8 @@ class UserNameTest {
 
             // When & Then
             assertThatThrownBy(() -> UserName.from(invalidName))
-                    .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("이름의 구성은 문자(한글, 영어), 숫자만 가능합니다.");
+                    .isInstanceOf(UserException.class)
+                    .hasMessageContaining(UserErrorCode.INVALID_USER_NAME.getMessage());
         }
     }
 }
