@@ -11,7 +11,7 @@ import org.terning.user.common.failure.UserException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("푸시 알림 상태(PushNotificationStatus) 테스트")
+@DisplayName("푸시 알림 상태 테스트")
 class PushNotificationStatusTest {
 
     @Nested
@@ -20,9 +20,9 @@ class PushNotificationStatusTest {
 
         @ParameterizedTest
         @ValueSource(strings = {"", "enable", "disable", "on", "off", "true", "false", "null", " "})
-        @DisplayName("유효하지 않은 문자열로 of() 호출 시 예외 발생")
+        @DisplayName("유효하지 않은 문자열로 from() 호출 시 예외 발생")
         void invalidStringThrowsException(String input) {
-            assertThatThrownBy(() -> PushNotificationStatus.of(input))
+            assertThatThrownBy(() -> PushNotificationStatus.from(input))
                     .isInstanceOf(UserException.class)
                     .hasMessageContaining(UserErrorCode.INVALID_PUSH_STATUS.getMessage());
         }
@@ -56,17 +56,17 @@ class PushNotificationStatusTest {
     class SuccessCases {
 
         @ParameterizedTest
-        @ValueSource(strings = {"ENABLED", "enabled", "EnAbLeD"})
+        @ValueSource(strings = {"enabled", "ENABLED", "EnAbLeD"})
         @DisplayName("유효한 문자열로 PushNotificationStatus.ENABLED를 생성할 수 있다")
         void createEnabledFromValidStrings(String input) {
-            assertThat(PushNotificationStatus.of(input)).isEqualTo(PushNotificationStatus.ENABLED);
+            assertThat(PushNotificationStatus.from(input)).isEqualTo(PushNotificationStatus.ENABLED);
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"DISABLED", "disabled", "DisAbLed"})
+        @ValueSource(strings = {"disabled", "DISABLED", "DisAbLed"})
         @DisplayName("유효한 문자열로 PushNotificationStatus.DISABLED를 생성할 수 있다")
         void createDisabledFromValidStrings(String input) {
-            assertThat(PushNotificationStatus.of(input)).isEqualTo(PushNotificationStatus.DISABLED);
+            assertThat(PushNotificationStatus.from(input)).isEqualTo(PushNotificationStatus.DISABLED);
         }
 
         @Test
@@ -96,7 +96,7 @@ class PushNotificationStatusTest {
         }
 
         @ParameterizedTest
-        @ValueSource(strings = {"ENABLED", "DISABLED", "enabled", "disabled"})
+        @ValueSource(strings = {"enabled", "disabled", "ENABLED", "DISABLED"})
         @DisplayName("유효한 문자열은 isValid()가 true를 반환한다")
         void validStringReturnsTrue(String input) {
             assertThat(PushNotificationStatus.isValid(input)).isTrue();
