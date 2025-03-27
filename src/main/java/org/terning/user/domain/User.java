@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import org.terning.user.domain.vo.*;
 import org.terning.notification.domain.Notifications;
 import org.terning.global.entity.BaseEntity;
-import org.terning.scrap.domain.Scraps;
+import org.terning.scrap.domain.Scrap;
 
 @Entity
 @Getter
@@ -26,7 +26,7 @@ public class User extends BaseEntity {
     private List<Notifications> notifications = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Scraps> scraps = new ArrayList<>();
+    private List<Scrap> scraps = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
