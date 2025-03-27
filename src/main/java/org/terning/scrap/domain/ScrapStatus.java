@@ -19,6 +19,7 @@ public enum ScrapStatus {
 
     @JsonCreator
     public static ScrapStatus from(String input) {
+        validateNotNull(input);
         return Arrays.stream(values())
                 .filter(status -> status.value.equalsIgnoreCase(input))
                 .findFirst()
@@ -55,6 +56,12 @@ public enum ScrapStatus {
     @JsonValue
     public String value() {
         return value;
+    }
+
+    private static void validateNotNull(String input) {
+        if (input == null) {
+            throw new ScrapException(ScrapErrorCode.SCRAP_STATUS_CANNOT_BE_NULL);
+        }
     }
 }
 
