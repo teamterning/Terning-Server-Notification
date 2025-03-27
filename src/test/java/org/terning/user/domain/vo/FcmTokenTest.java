@@ -9,7 +9,7 @@ import org.terning.user.common.failure.UserException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@DisplayName("푸시 토큰 테스트")
+@DisplayName("FCM 토큰 테스트")
 class FcmTokenTest {
 
     @Nested
