@@ -10,23 +10,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("푸시 토큰 테스트")
-class PushTokenTest {
+class FcmTokenTest {
 
     @Nested
     @DisplayName("성공 케이스")
     class SuccessCases {
 
         @Test
-        @DisplayName("유효한 푸시 토큰으로 생성할 수 있다.")
-        void createPushTokenWithValidValue() {
+        @DisplayName("유효한 FCM 토큰으로 생성할 수 있다.")
+        void createFcmTokenWithValidValue() {
             // Given
             String validToken = "abcdefg123456";
 
             // When
-            PushToken pushToken = PushToken.from(validToken);
+            FcmToken fcmToken = FcmToken.from(validToken);
 
             // Then
-            assertThat(pushToken.value()).isEqualTo(validToken);
+            assertThat(fcmToken.value()).isEqualTo(validToken);
         }
     }
 
@@ -35,15 +35,15 @@ class PushTokenTest {
     class FailureCases {
 
         @Test
-        @DisplayName("토큰이 null이면 예외가 발생한다.")
-        void shouldThrowExceptionWhenTokenIsNull() {
+        @DisplayName("FCM 토큰이 null이면 예외가 발생한다.")
+        void shouldThrowExceptionWhenFcmTokenIsNull() {
             // Given
             String nullToken = null;
 
             // When & Then
-            assertThatThrownBy(() -> PushToken.from(nullToken))
+            assertThatThrownBy(() -> FcmToken.from(nullToken))
                     .isInstanceOf(UserException.class)
-                    .hasMessageContaining(UserErrorCode.PUSH_TOKEN_NOT_NULL.getMessage());
+                    .hasMessageContaining(UserErrorCode.FCM_TOKEN_NOT_NULL.getMessage());
         }
     }
 }
