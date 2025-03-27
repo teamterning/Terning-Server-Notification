@@ -18,6 +18,20 @@ class ScrapStatusTest {
     @DisplayName("실패 케이스")
     class FailureCases {
 
+        @Test
+        @DisplayName("null 값으로 from() 호출 시 예외 발생")
+        void nullInputThrowsException() {
+            assertThatThrownBy(() -> ScrapStatus.from(null))
+                    .isInstanceOf(ScrapException.class)
+                    .hasMessageContaining(ScrapErrorCode.SCRAP_STATUS_CANNOT_BE_NULL.getMessage());
+        }
+
+        @Test
+        @DisplayName("null 값은 isValid()가 false를 반환한다")
+        void nullInputReturnsFalseForIsValid() {
+            assertThat(ScrapStatus.isValid(null)).isFalse();
+        }
+
         @ParameterizedTest
         @ValueSource(strings = {"", "active", "inactive", "scrap", "true", "false", "null", " "})
         @DisplayName("유효하지 않은 문자열로 from() 호출 시 예외 발생")
