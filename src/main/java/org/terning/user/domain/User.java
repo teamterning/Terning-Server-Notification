@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import org.terning.user.domain.vo.UserName;
+import org.terning.user.domain.vo.*;
 import org.terning.notification.domain.Notifications;
 import org.terning.global.entity.BaseEntity;
 import org.terning.scrap.domain.Scraps;
@@ -33,16 +33,35 @@ public class User extends BaseEntity {
     private Long id;
 
     @Embedded
-    @AttributeOverride(name = "name", column = @Column(name = "name"))
+    @AttributeOverride(name = "value", column = @Column(name = "name"))
     private UserName name;
 
-    private String token;
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "token"))
+    private PushToken token;
 
-    private boolean isPushEnable;
+    @Enumerated(EnumType.STRING)
+    private PushNotificationStatus pushStatus;
 
     @Enumerated(EnumType.STRING)
     private AuthType authType;
 
     @Enumerated(EnumType.STRING)
-    private State state;
+    private AccountStatus accountStatus;
+
+    public boolean canReceivePushNotification() {
+        return pushStatus.canReceiveNotification();
+    }
+
+    public void enablePushNotification() {
+        this.pushStatus = pushStatus.enable();
+    }
+
+    public void disablePushNotification() {
+        this.pushStatus = pushStatus.disable();
+    }
+
+    public boolean isActiveUser() {
+        return !accountStatus.isWithdrawn();
+    }
 }
