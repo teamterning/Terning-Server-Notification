@@ -24,28 +24,4 @@ public class GlobalExceptionHandler {
                 .status(errorCode.getStatus())
                 .body(ErrorResponse.of(errorCode));
     }
-
-    @ExceptionHandler(UnsupportedOperationException.class)
-    public ResponseEntity<ErrorResponse> handleNotImplemented(UnsupportedOperationException exception) {
-        ErrorCode errorCode = GlobalErrorCode.NOT_IMPLEMENTED;
-        return ResponseEntity
-                .status(errorCode.getStatus())
-                .body(ErrorResponse.of(errorCode));
-    }
-
-    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-    public ResponseEntity<ErrorResponse> handleBadGateway(HttpMediaTypeNotSupportedException exception) {
-        ErrorCode errorCode = GlobalErrorCode.BAD_GATEWAY;
-        return ResponseEntity
-                .status(errorCode.getStatus())
-                .body(ErrorResponse.of(errorCode));
-    }
-
-    @ExceptionHandler(SocketTimeoutException.class)
-    public ResponseEntity<ErrorResponse> handleGatewayTimeout(SocketTimeoutException exception) {
-        ErrorCode errorCode = GlobalErrorCode.GATEWAY_TIMEOUT;
-        return ResponseEntity
-                .status(errorCode.getStatus())
-                .body(ErrorResponse.of(errorCode));
-    }
 }
