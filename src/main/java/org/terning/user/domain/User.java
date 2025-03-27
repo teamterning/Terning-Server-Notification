@@ -38,7 +38,7 @@ public class User extends BaseEntity {
 
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "token"))
-    private PushToken token;
+    private FcmToken token;
 
     @Enumerated(EnumType.STRING)
     private PushNotificationStatus pushStatus;
