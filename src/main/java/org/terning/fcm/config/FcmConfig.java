@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
+import org.terning.global.constant.Encoding;
 
 @Configuration
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class FcmConfig {
             String serviceKeyJson = fcmProperties.getServiceKey();
 
             try (ByteArrayInputStream serviceAccountStream =
-                         new ByteArrayInputStream(serviceKeyJson.getBytes(StandardCharsets.UTF_8))) {
+                         new ByteArrayInputStream(serviceKeyJson.getBytes(Encoding.UTF_8))) {
 
                 FirebaseOptions options = FirebaseOptions.builder()
                         .setCredentials(GoogleCredentials.fromStream(serviceAccountStream))
