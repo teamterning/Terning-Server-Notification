@@ -22,6 +22,8 @@ public enum UserErrorCode implements ErrorCode {
     INVALID_ACCOUNT_STATUS(HttpStatus.BAD_REQUEST, "계정 상태는 active, inactive, withdrawn만 가능합니다."),
 
     INVALID_AUTH_TYPE(HttpStatus.BAD_REQUEST, "인증 타입은 apple, kakao만 가능합니다."),
+
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다."),
     ;
 
     private static final String PREFIX = "[USER ERROR] ";
