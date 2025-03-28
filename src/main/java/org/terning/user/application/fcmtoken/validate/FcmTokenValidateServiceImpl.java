@@ -22,6 +22,11 @@ public class FcmTokenValidateServiceImpl implements FcmTokenValidateService {
     @Override
     public FcmTokenReissueRequiredResponse isFcmTokenReissueRequired(FcmTokenReissueRequiredRequest request) {
         User user = findUserById(request.userId());
+
+        if (!isUserQualifiedForFcmValidation(user)) {
+            return FcmTokenReissueRequiredResponse.of(false);
+        }
+
         boolean expired = user.isFcmTokenExpired(fcmTokenValidator);
         return FcmTokenReissueRequiredResponse.of(expired);
     }
@@ -29,5 +34,9 @@ public class FcmTokenValidateServiceImpl implements FcmTokenValidateService {
     private User findUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
+    }
+
+    private boolean isUserQualifiedForFcmValidation(User user) {
+        return user.isActiveUser() && user.canReceivePushNotification();
     }
 }
