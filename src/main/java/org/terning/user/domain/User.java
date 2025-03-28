@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import org.terning.fcm.validate.FcmTokenValidator;
 import org.terning.user.domain.vo.*;
 import org.terning.notification.domain.Notifications;
 import org.terning.global.entity.BaseEntity;
@@ -16,9 +17,7 @@ import org.terning.scrap.domain.Scrap;
 
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Table(name = "users")
 public class User extends BaseEntity {
 
@@ -49,6 +48,18 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
 
+    private User(UserName name, FcmToken token, PushNotificationStatus pushStatus, AuthType authType, AccountStatus accountStatus) {
+        this.name = name;
+        this.token = token;
+        this.pushStatus = pushStatus;
+        this.authType = authType;
+        this.accountStatus = accountStatus;
+    }
+
+    public static User of(UserName name, FcmToken token, PushNotificationStatus pushStatus, AuthType authType, AccountStatus accountStatus) {
+        return new User(name, token, pushStatus, authType, accountStatus);
+    }
+
     public boolean canReceivePushNotification() {
         return pushStatus.canReceiveNotification();
     }
@@ -63,5 +74,9 @@ public class User extends BaseEntity {
 
     public boolean isActiveUser() {
         return !accountStatus.isWithdrawn();
+    }
+
+    public boolean isFcmTokenExpired(FcmTokenValidator validator) {
+        return this.token.isExpiredWith(validator);
     }
 }
