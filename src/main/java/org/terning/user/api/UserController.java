@@ -2,10 +2,7 @@ package org.terning.user.api;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.terning.global.success.SuccessResponse;
 import org.terning.user.application.UserService;
 import org.terning.user.common.success.UserSuccessCode;
@@ -19,13 +16,16 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/fcm-tokens/reissue-required")
+    @GetMapping("/{userId}/fcm-tokens/reissue-required")
     public ResponseEntity<SuccessResponse<FcmTokenReissueRequiredResponse>> checkFcmTokenReissueRequired(
-            @RequestBody FcmTokenReissueRequiredRequest request
+            @PathVariable Long userId
     ) {
+        FcmTokenReissueRequiredRequest request = FcmTokenReissueRequiredRequest.of(userId);
         FcmTokenReissueRequiredResponse response = userService.isFcmTokenReissueRequired(request);
+
         return ResponseEntity.ok(
                 SuccessResponse.of(UserSuccessCode.FCM_TOKEN_REISSUE_STATUS_PROVIDED, response)
         );
     }
 }
+
