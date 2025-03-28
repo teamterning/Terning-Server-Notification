@@ -1,4 +1,4 @@
-package org.terning.fcm.config;
+package org.terning.user.config;
 
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
