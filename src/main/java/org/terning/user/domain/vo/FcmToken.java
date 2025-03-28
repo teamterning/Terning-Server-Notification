@@ -29,6 +29,10 @@ public class FcmToken {
         return validator.isExpiredWith(this);
     }
 
+    public FcmToken updateValue(String newValue) {
+        return FcmToken.from(newValue);
+    }
+
     public String value() {
         return value;
     }
