@@ -22,7 +22,10 @@ class FcmTokenValidateServiceImplTest {
     private UserRepository userRepository;
     private FakeFcmTokenValidator fakeValidator;
     private FcmTokenValidateService service;
-    private Long userId;
+
+    private Long activeUserId;
+    private Long inactiveUserId;
+    private Long pushDisabledUserId;
 
     @BeforeEach
     void setUp() {
@@ -30,14 +33,9 @@ class FcmTokenValidateServiceImplTest {
         fakeValidator = new FakeFcmTokenValidator();
         service = new FcmTokenValidateServiceImpl(userRepository, fakeValidator);
 
-        User user = User.of(
-                UserName.from("장순"),
-                FcmToken.from("test-token"),
-                PushNotificationStatus.from("ENABLED"),
-                AuthType.from("KAKAO"),
-                AccountStatus.from("ACTIVE")
-        );
-        userId = userRepository.save(user).getId();
+        activeUserId = saveUser("장순", "test-token", PushNotificationStatus.ENABLED, AuthType.KAKAO, AccountStatus.ACTIVE);
+        inactiveUserId = saveUser("탈퇴유저", "withdrawn-token", PushNotificationStatus.ENABLED, AuthType.KAKAO, AccountStatus.WITHDRAWN);
+        pushDisabledUserId = saveUser("푸시꺼진유저", "some-token", PushNotificationStatus.DISABLED, AuthType.KAKAO, AccountStatus.ACTIVE);
     }
 
     @Nested
@@ -47,28 +45,22 @@ class FcmTokenValidateServiceImplTest {
         @Test
         @DisplayName("FCM 토큰이 만료된 경우 true를 반환한다")
         void returnsTrue_whenTokenIsExpired() {
-            // given
             fakeValidator.setExpired(true);
 
-            // when
-            FcmTokenReissueRequiredRequest request = new FcmTokenReissueRequiredRequest(userId);
+            FcmTokenReissueRequiredRequest request = FcmTokenReissueRequiredRequest.of(activeUserId);
             FcmTokenReissueRequiredResponse response = service.isFcmTokenReissueRequired(request);
 
-            // then
             assertThat(response.reissueRequired()).isTrue();
         }
 
         @Test
         @DisplayName("FCM 토큰이 만료되지 않은 경우 false를 반환한다")
         void returnsFalse_whenTokenIsNotExpired() {
-            // given
             fakeValidator.setExpired(false);
 
-            // when
-            FcmTokenReissueRequiredRequest request = new FcmTokenReissueRequiredRequest(userId);
+            FcmTokenReissueRequiredRequest request = FcmTokenReissueRequiredRequest.of(activeUserId);
             FcmTokenReissueRequiredResponse response = service.isFcmTokenReissueRequired(request);
 
-            // then
             assertThat(response.reissueRequired()).isFalse();
         }
     }
@@ -80,18 +72,46 @@ class FcmTokenValidateServiceImplTest {
         @Test
         @DisplayName("존재하지 않는 사용자 ID이면 예외를 던진다")
         void throwsException_whenUserNotFound() {
-            // given
-            fakeValidator.setExpired(false);
-            Long notExistId = userId + 1000;
+            Long notExistId = activeUserId + 1000;
 
-            // expect
-            assertThatThrownBy(() -> {
-                FcmTokenReissueRequiredRequest request = new FcmTokenReissueRequiredRequest(notExistId);
-                service.isFcmTokenReissueRequired(request);
-            }).isInstanceOf(UserException.class)
+            FcmTokenReissueRequiredRequest request = FcmTokenReissueRequiredRequest.of(notExistId);
+
+            assertThatThrownBy(() -> service.isFcmTokenReissueRequired(request))
+                    .isInstanceOf(UserException.class)
                     .hasMessageContaining(UserErrorCode.USER_NOT_FOUND.getMessage());
         }
+
+        @Test
+        @DisplayName("계정 상태가 탈퇴인 경우 false를 반환한다")
+        void returnsFalse_whenAccountIsWithdrawn() {
+            fakeValidator.setExpired(true);
+
+            FcmTokenReissueRequiredRequest request = FcmTokenReissueRequiredRequest.of(inactiveUserId);
+            FcmTokenReissueRequiredResponse response = service.isFcmTokenReissueRequired(request);
+
+            assertThat(response.reissueRequired()).isFalse();
+        }
+
+        @Test
+        @DisplayName("푸시 알림이 비활성화된 경우 false를 반환한다")
+        void returnsFalse_whenPushIsDisabled() {
+            fakeValidator.setExpired(true);
+
+            FcmTokenReissueRequiredRequest request = FcmTokenReissueRequiredRequest.of(pushDisabledUserId);
+            FcmTokenReissueRequiredResponse response = service.isFcmTokenReissueRequired(request);
+
+            assertThat(response.reissueRequired()).isFalse();
+        }
+    }
+
+    private Long saveUser(String name, String token, PushNotificationStatus pushStatus, AuthType authType, AccountStatus accountStatus) {
+        User user = User.of(
+                UserName.from(name),
+                FcmToken.from(token),
+                pushStatus,
+                authType,
+                accountStatus
+        );
+        return userRepository.save(user).getId();
     }
 }
-
-
