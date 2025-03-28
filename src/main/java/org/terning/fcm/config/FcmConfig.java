@@ -21,10 +21,8 @@ public class FcmConfig {
     @PostConstruct
     public void init() {
         try {
-            // 환경변수에서 주입된 JSON 가져오기
             String serviceKeyJson = fcmProperties.getServiceKey();
 
-            // Json 문자열 > InputStream 으로 변환
             try (ByteArrayInputStream serviceAccountStream =
                          new ByteArrayInputStream(serviceKeyJson.getBytes(StandardCharsets.UTF_8))) {
 
