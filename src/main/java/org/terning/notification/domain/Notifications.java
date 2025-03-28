@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.terning.message.domain.Messages;
+import org.terning.message.domain.Message;
 import org.terning.global.entity.BaseEntity;
 import org.terning.user.domain.User;
 
@@ -32,7 +32,7 @@ public class Notifications extends BaseEntity {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "message_id")
-    private Messages messages;
+    private Message message;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
