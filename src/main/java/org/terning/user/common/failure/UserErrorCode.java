@@ -10,7 +10,7 @@ import org.terning.global.failure.ErrorCode;
 public enum UserErrorCode implements ErrorCode {
     USER_NAME_NOT_NULL(HttpStatus.BAD_REQUEST, "이름은 null일 수 없습니다."),
     USER_NAME_LENGTH_EXCEEDED(HttpStatus.BAD_REQUEST, "이름은 공백 포함 12글자를 넘을 수 없습니다."),
-    INVALID_USER_NAME(HttpStatus.BAD_REQUEST, "이름의 구성은 문자(한글, 영어), 숫자만 가능합니다."),
+    INVALID_USER_NAME(HttpStatus.BAD_REQUEST, "이름은 한글, 영어, 숫자, 공백으로만 구성할 수 있습니다."),
 
     PUSH_TOKEN_NOT_NULL(HttpStatus.BAD_REQUEST, "푸시 토큰은 null일 수 없습니다."),
 

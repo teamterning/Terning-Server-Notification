@@ -31,12 +31,12 @@ public class UserName {
     }
 
     private void validateName(String value) {
-        validateNull(value);
-        validateLength(value);
+        validateNotNull(value);
         validateInvalidCharacters(value);
+        validateLength(value);
     }
 
-    private void validateNull(String value) {
+    private void validateNotNull(String value) {
         if (value == null) {
             throw new UserException(UserErrorCode.USER_NAME_NOT_NULL);
         }
