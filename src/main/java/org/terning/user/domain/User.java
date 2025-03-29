@@ -77,6 +77,12 @@ public class User extends BaseEntity {
     }
 
     public boolean isFcmTokenExpired(FcmTokenValidator validator) {
-        return this.token.isExpiredWith(validator);
+        FcmToken currentToken = this.token;
+        return currentToken.isExpiredWith(validator);
+    }
+
+    public void updateFcmToken(String newTokenValue) {
+        FcmToken updatedToken = token.updateValue(newTokenValue);
+        this.token = updatedToken;
     }
 }
