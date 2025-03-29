@@ -14,6 +14,6 @@
 
 
 # ✅ PR check list
-- [ ] Reviews
+- [ ] Reviewers
 - [ ] Assignees
 - [ ] Labels
