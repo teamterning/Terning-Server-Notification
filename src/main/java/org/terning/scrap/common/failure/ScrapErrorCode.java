@@ -14,6 +14,8 @@ public enum ScrapErrorCode implements ErrorCode {
     ALREADY_UNSCRAPPED(HttpStatus.BAD_REQUEST, "스크랩되지 않은 상태입니다."),
     SCRAP_STATUS_CANNOT_BE_NULL(HttpStatus.BAD_REQUEST, "스크랩 상태는 null일 수 없습니다."),
 
+    SYNC_JOB_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "스크랩 동기화 배치 실행 중 오류가 발생했습니다."),
+
     ;
 
     private static final String PREFIX = "[SCRAP ERROR] ";
