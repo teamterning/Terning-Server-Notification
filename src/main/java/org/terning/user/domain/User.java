@@ -1,31 +1,33 @@
 package org.terning.user.domain;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import org.terning.fcm.validate.FcmTokenValidator;
-import org.terning.user.domain.vo.*;
-import org.terning.notification.domain.Notifications;
 import org.terning.global.entity.BaseEntity;
+import org.terning.notification.domain.Notification;
+import org.terning.notification.domain.Notifications;
 import org.terning.scrap.domain.Scrap;
+import org.terning.scrap.domain.Scraps;
+import org.terning.user.domain.vo.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
+@EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "users")
 public class User extends BaseEntity {
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Notifications> notifications = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Notification> notifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Scrap> scraps = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<Scrap> scraps = new ArrayList<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,6 +62,30 @@ public class User extends BaseEntity {
         return new User(name, token, pushStatus, authType, accountStatus);
     }
 
+    public Notifications notifications() {
+        return Notifications.of(this.notifications);
+    }
+
+    public Scraps scraps() {
+        return Scraps.of(this.scraps);
+    }
+
+    public void addNotification(Notification notification) {
+        notifications.add(notification);
+    }
+
+    public void removeNotification(Notification notification) {
+        notifications.remove(notification);
+    }
+
+    public void addScrap(Scrap scrap) {
+        scraps.add(scrap);
+    }
+
+    public void removeScrap(Scrap scrap) {
+        scraps.remove(scrap);
+    }
+
     public boolean canReceivePushNotification() {
         return pushStatus.canReceiveNotification();
     }
@@ -77,12 +103,10 @@ public class User extends BaseEntity {
     }
 
     public boolean isFcmTokenExpired(FcmTokenValidator validator) {
-        FcmToken currentToken = this.token;
-        return currentToken.isExpiredWith(validator);
+        return this.token.isExpiredWith(validator);
     }
 
     public void updateFcmToken(String newTokenValue) {
-        FcmToken updatedToken = token.updateValue(newTokenValue);
-        this.token = updatedToken;
+        this.token = token.updateValue(newTokenValue);
     }
 }
