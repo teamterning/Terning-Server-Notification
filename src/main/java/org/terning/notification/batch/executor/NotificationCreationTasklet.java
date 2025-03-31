@@ -20,8 +20,9 @@ public class NotificationCreationTasklet implements Tasklet {
 
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
+        LocalDateTime now = LocalDateTime.now();
         for (MessageTemplateType template : MessageTemplateType.values()) {
-            ScheduledTime scheduledTime = ScheduledTime.of(LocalDateTime.now());
+            ScheduledTime scheduledTime = ScheduledTime.of(now);
             notificationService.executeNotificationCreation(template, scheduledTime);
         }
 
