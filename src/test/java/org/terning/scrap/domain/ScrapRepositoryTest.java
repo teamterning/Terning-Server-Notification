@@ -5,11 +5,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
+import org.terning.user.domain.User;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import static org.terning.scrap.domain.QScrap.scrap;
+import static org.terning.user.domain.QUser.user;
 
 public class ScrapRepositoryTest implements ScrapRepository, ScrapRepositoryCustom {
 
@@ -37,6 +41,15 @@ public class ScrapRepositoryTest implements ScrapRepository, ScrapRepositoryCust
     public List<Scrap> findScrapsByUserIds(List<Long> userIds) {
         return scraps.stream()
                 .filter(scrap -> userIds.contains(scrap.getUser().getId()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> findDistinctScrappedUsers() {
+        return scraps.stream()
+                .filter(scrap -> scrap.getStatus() == ScrapStatus.SCRAPPED)
+                .map(Scrap::getUser)
+                .distinct()
                 .collect(Collectors.toList());
     }
 
