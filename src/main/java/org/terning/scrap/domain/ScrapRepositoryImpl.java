@@ -3,6 +3,10 @@ package org.terning.scrap.domain;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.terning.user.domain.User;
+
+import static org.terning.user.domain.QUser.user;
+
 
 import java.util.List;
 
@@ -19,6 +23,16 @@ public class ScrapRepositoryImpl implements ScrapRepositoryCustom {
         return queryFactory
                 .selectFrom(scrap)
                 .where(scrap.user.id.in(userIds))
+                .fetch();
+    }
+
+    @Override
+    public List<User> findDistinctScrappedUsers() {
+        return queryFactory
+                .selectDistinct(scrap.user)
+                .from(scrap)
+                .join(scrap.user, user).fetchJoin()
+                .where(scrap.status.eq(ScrapStatus.SCRAPPED))
                 .fetch();
     }
 }

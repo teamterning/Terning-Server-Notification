@@ -1,42 +1,38 @@
 package org.terning.notification.domain;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import java.time.LocalDateTime;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.terning.message.domain.Message;
-import org.terning.global.entity.BaseEntity;
-import org.terning.user.domain.User;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-@Entity
-@Getter
-@Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-public class Notifications extends BaseEntity {
+public class Notifications {
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    private final List<Notification> notifications;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinColumn(name = "message_id")
-    private Message message;
+    private Notifications(List<Notification> notifications) {
+        this.notifications = List.copyOf(notifications);
+    }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public static Notifications of(List<Notification> notifications) {
+        return new Notifications(notifications);
+    }
 
-    private LocalDateTime schedule;
+    public static Notifications empty() {
+        return new Notifications(Collections.emptyList());
+    }
+
+    public List<Notification> values() {
+        return Collections.unmodifiableList(notifications);
+    }
+
+    public Notifications add(Notification notification) {
+        List<Notification> newList = new ArrayList<>(this.notifications);
+        newList.add(notification);
+        return new Notifications(newList);
+    }
+
+    public Notifications remove(Notification notification) {
+        List<Notification> newList = new ArrayList<>(this.notifications);
+        newList.remove(notification);
+        return new Notifications(newList);
+    }
 }
