@@ -17,24 +17,23 @@ public class Message extends BaseEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private MessageTemplateType messageTemplateType;
 
-    private String formattedMainMessage;
+    private String main;
 
-    private String formattedSubMessage;
+    private String sub;
 
-    private Message(MessageTemplateType messageTemplateType, String formattedMainMessage, String formattedSubMessage) {
+    private Message(MessageTemplateType messageTemplateType, String main, String sub) {
         this.messageTemplateType = messageTemplateType;
-        this.formattedMainMessage = formattedMainMessage;
-        this.formattedSubMessage = formattedSubMessage;
+        this.main = main;
+        this.sub = sub;
     }
 
-    public static Message of(MessageTemplateType template, String formattedMainMessage, String formattedSubMessage) {
-        return new Message(template, formattedMainMessage, formattedSubMessage);
+    public static Message of(MessageTemplateType messageTemplateType, String main, String sub) {
+        return new Message(messageTemplateType, main, sub);
     }
 
-    public boolean isSameType(MessageTemplateType otherTemplate) {
-        return this.messageTemplateType == otherTemplate;
+    public boolean isSameType(MessageTemplateType other) {
+        return this.messageTemplateType == other;
     }
 }

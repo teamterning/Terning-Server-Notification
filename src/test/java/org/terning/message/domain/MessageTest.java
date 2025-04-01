@@ -31,8 +31,8 @@ class MessageTest {
 
             Message message = Message.of(template, template.main(null), template.sub(VALID_PARAMS));
 
-            assertThat(message.getFormattedMainMessage()).isEqualTo(template.main(null));
-            assertThat(message.getFormattedSubMessage()).doesNotContain("{username}");
+            assertThat(message.getMain()).isEqualTo(template.main(null));
+            assertThat(message.getSub()).doesNotContain("{username}");
         }
 
         @Test
@@ -42,8 +42,8 @@ class MessageTest {
 
             Message message = Message.of(template, template.main(null), template.sub(VALID_PARAMS));
 
-            assertThat(message.getFormattedMainMessage()).isEqualTo(template.main(null));
-            assertThat(message.getFormattedSubMessage()).doesNotContain("{username}");
+            assertThat(message.getMain()).isEqualTo(template.main(null));
+            assertThat(message.getSub()).doesNotContain("{username}");
         }
 
         @Test
@@ -53,8 +53,8 @@ class MessageTest {
 
             Message message = Message.of(template, template.main(null), template.sub(VALID_PARAMS));
 
-            assertThat(message.getFormattedMainMessage()).isEqualTo(template.main(null));
-            assertThat(message.getFormattedSubMessage()).doesNotContain("{username}");
+            assertThat(message.getMain()).isEqualTo(template.main(null));
+            assertThat(message.getSub()).doesNotContain("{username}");
         }
 
         @Test

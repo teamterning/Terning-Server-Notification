@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class UserRepositoryTest implements UserRepository {
+public class UserRepositoryTest implements UserRepository, UserRepositoryCustom {
 
     private final List<User> users = new ArrayList<>();
     private final AtomicLong idGenerator = new AtomicLong(1);
@@ -32,6 +32,13 @@ public class UserRepositoryTest implements UserRepository {
             throw new RuntimeException("[USER REPOSITORY TEST ERROR] User 객체의 id 필드를 설정할 수 없습니다.", e);
         }
         return user;
+    }
+
+    @Override
+    public Map<Long, User> findUsersByIds(List<Long> userIds) {
+        return users.stream()
+                .filter(user -> userIds.contains(user.getId()))
+                .collect(Collectors.toMap(User::getId, Function.identity()));
     }
 
     @Override
