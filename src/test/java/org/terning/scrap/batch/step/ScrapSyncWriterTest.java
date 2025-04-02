@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.item.Chunk;
-import org.terning.infra.ops.scrap.dto.response.OpsScrapUserResponse;
+import org.terning.scrap.dto.response.OpsScrapUserResponse;
 import org.terning.scrap.domain.*;
 import org.terning.scrap.application.ScrapSyncManager;
 import org.terning.user.domain.*;
