@@ -33,6 +33,8 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long oUserId;
+
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "name"))
     private UserName name;
@@ -50,7 +52,8 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
 
-    private User(UserName name, FcmToken token, PushNotificationStatus pushStatus, AuthType authType, AccountStatus accountStatus) {
+    private User(Long oUserId, UserName name, FcmToken token, PushNotificationStatus pushStatus, AuthType authType, AccountStatus accountStatus) {
+        this.oUserId = oUserId;
         this.name = name;
         this.token = token;
         this.pushStatus = pushStatus;
@@ -58,8 +61,8 @@ public class User extends BaseEntity {
         this.accountStatus = accountStatus;
     }
 
-    public static User of(UserName name, FcmToken token, PushNotificationStatus pushStatus, AuthType authType, AccountStatus accountStatus) {
-        return new User(name, token, pushStatus, authType, accountStatus);
+    public static User of(Long oUserId, UserName name, FcmToken token, PushNotificationStatus pushStatus, AuthType authType, AccountStatus accountStatus) {
+        return new User(oUserId, name, token, pushStatus, authType, accountStatus);
     }
 
     public Notifications notifications() {

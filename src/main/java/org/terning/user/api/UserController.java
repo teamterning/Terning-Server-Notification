@@ -39,5 +39,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(SuccessResponse.of(UserSuccessCode.FCM_TOKEN_UPDATED));
     }
+
+    @PostMapping
+    public ResponseEntity<SuccessResponse<Void>> createUser(
+            @RequestBody CreateUserRequest request
+    ) {
+        userService.createUser(request);
+        return ResponseEntity.ok(SuccessResponse.of(UserSuccessCode.USER_CREATED));
+    }
 }
 
