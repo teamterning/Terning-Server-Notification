@@ -1,4 +1,4 @@
-package org.terning.infra.ops.scrap.dto.response;
+package org.terning.scrap.dto.response;
 
 import java.util.List;
 

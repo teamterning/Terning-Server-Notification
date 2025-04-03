@@ -2,8 +2,8 @@ package org.terning.scrap.application;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.terning.infra.ops.scrap.OpsScrapUserClient;
-import org.terning.infra.ops.scrap.dto.response.OpsScrapUserResponse;
+import org.terning.scrap.config.OpsScrapUserClient;
+import org.terning.scrap.dto.response.OpsScrapUserResponse;
 
 import java.util.List;
 
@@ -20,6 +20,8 @@ public class ScrapStatusSyncServiceImpl implements ScrapStatusSyncService {
         if (userIds.isEmpty()) return;
 
         scrapSyncManager.sync(userIds);
+
+        opsScrapUserClient.notifyScrapResult(userIds);
     }
 
     private List<Long> extractUserIdsFromOps() {
