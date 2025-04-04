@@ -1,4 +1,5 @@
-package org.terning.fcm.config;
+package org.terning.user.config;
+
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -7,13 +8,11 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.terning.global.constant.Encoding;
 import org.terning.user.common.log.FcmLogMessages;
 
 @Configuration
-@EnableConfigurationProperties(FcmProperties.class)
 @RequiredArgsConstructor
 @Slf4j
 public class FcmConfig {

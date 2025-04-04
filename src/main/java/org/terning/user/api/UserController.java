@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.terning.global.success.SuccessResponse;
 import org.terning.user.application.UserService;
 import org.terning.user.common.success.UserSuccessCode;
+import org.terning.user.dto.request.CreateUserRequest;
 import org.terning.user.dto.request.FcmTokenReissueRequiredRequest;
 import org.terning.user.dto.request.UpdateFcmTokenRequest;
 import org.terning.user.dto.response.FcmTokenReissueRequiredResponse;
