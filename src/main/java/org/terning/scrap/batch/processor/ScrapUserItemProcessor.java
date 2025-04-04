@@ -3,7 +3,7 @@ package org.terning.scrap.batch.processor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
-import org.terning.infra.ops.scrap.dto.response.OpsScrapUserResponse;
+import org.terning.scrap.dto.response.OpsScrapUserResponse;
 
 @Slf4j
 @Component

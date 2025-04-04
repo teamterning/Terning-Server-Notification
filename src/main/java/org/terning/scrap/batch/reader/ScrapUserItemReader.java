@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.stereotype.Component;
-import org.terning.infra.ops.scrap.OpsScrapUserClient;
-import org.terning.infra.ops.scrap.dto.response.OpsScrapUserResponse;
+import org.terning.scrap.config.OpsScrapUserClient;
+import org.terning.scrap.dto.response.OpsScrapUserResponse;
 
 import java.util.Iterator;
 import java.util.List;

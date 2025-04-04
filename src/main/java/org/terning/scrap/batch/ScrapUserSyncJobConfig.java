@@ -13,7 +13,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.terning.scrap.batch.processor.ScrapUserItemProcessor;
 import org.terning.scrap.batch.reader.ScrapUserItemReader;
 import org.terning.scrap.batch.step.ScrapSyncWriter;
-import org.terning.infra.ops.scrap.dto.response.OpsScrapUserResponse;
+import org.terning.scrap.dto.response.OpsScrapUserResponse;
 
 @Configuration
 @EnableBatchProcessing

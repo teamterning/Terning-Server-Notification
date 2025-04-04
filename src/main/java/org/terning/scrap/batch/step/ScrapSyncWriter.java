@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
-import org.terning.infra.ops.scrap.dto.response.OpsScrapUserResponse;
+import org.terning.scrap.dto.response.OpsScrapUserResponse;
 import org.terning.scrap.application.ScrapSyncManager;
 
 import java.util.List;
