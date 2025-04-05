@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class NotificationScheduler {
 
-    private static final String CRON_NOTIFICATION_CREATION = "0 0 3 * * *";
+    private static final String CRON_NOTIFICATION_CREATION = "0 10 3 * * *";
     private static final String JOB_PARAM_TIMESTAMP = "timestamp";
 
     private final JobLauncher jobLauncher;
