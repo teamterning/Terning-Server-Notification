@@ -15,6 +15,8 @@ public enum MessageErrorCode implements ErrorCode {
     MISSING_PLACEHOLDER_VALUE(HttpStatus.BAD_REQUEST, "메시지 포맷팅에 필요한 값이 없습니다."),
 
     INVALID_SCHEDULE(HttpStatus.BAD_REQUEST, "유효하지 않은 스케줄입니다."),
+    INVALID_EMPTY_SCHEDULE_LIST(HttpStatus.BAD_REQUEST, "스케줄 리스트는 비어 있을 수 없습니다."),
+
 
     ;
 
