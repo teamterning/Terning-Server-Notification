@@ -12,11 +12,12 @@ public class Schedules {
 
     private final List<Schedule> values;
 
-    public Schedules(List<Schedule> values) {
-        if (values == null || values.isEmpty()) {
-            throw new MessageException(MessageErrorCode.INVALID_EMPTY_SCHEDULE_LIST);
-        }
-        this.values = values;
+    private Schedules(List<Schedule> values) {
+        this.values = validate(values);
+    }
+
+    public static Schedules of(List<Schedule> values) {
+        return new Schedules(values);
     }
 
     public LocalDateTime nextScheduleDate(LocalDateTime now) {
@@ -32,5 +33,12 @@ public class Schedules {
 
     public List<Schedule> getValues() {
         return Collections.unmodifiableList(values);
+    }
+
+    private static List<Schedule> validate(List<Schedule> values) {
+        if (values == null || values.isEmpty()) {
+            throw new MessageException(MessageErrorCode.INVALID_EMPTY_SCHEDULE_LIST);
+        }
+        return values;
     }
 }
