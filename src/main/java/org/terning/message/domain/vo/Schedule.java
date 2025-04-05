@@ -3,12 +3,15 @@ package org.terning.message.domain.vo;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 
 public record Schedule(DayOfWeek dayOfWeek, LocalTime time) {
 
     public boolean matches(LocalDateTime now) {
-        return now.getDayOfWeek() == dayOfWeek && now.toLocalTime().equals(time);
+        return now.getDayOfWeek() == dayOfWeek &&
+                now.toLocalTime().truncatedTo(ChronoUnit.MINUTES)
+                        .equals(time.truncatedTo(ChronoUnit.MINUTES));
     }
 
     public LocalDateTime nextScheduleAfter(LocalDateTime now) {
