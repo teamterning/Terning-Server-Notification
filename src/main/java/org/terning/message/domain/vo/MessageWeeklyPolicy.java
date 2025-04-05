@@ -1,26 +1,25 @@
 package org.terning.message.domain.vo;
 
-import java.time.DayOfWeek;
+import org.terning.message.common.failure.MessageErrorCode;
+import org.terning.message.common.failure.MessageException;
+
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.temporal.TemporalAdjusters;
+import java.util.List;
 
-public record MessageWeeklyPolicy(DayOfWeek dayOfWeek, LocalTime time) {
+public record MessageWeeklyPolicy(List<Schedule> schedules) {
 
-    public static MessageWeeklyPolicy of(DayOfWeek dayOfWeek, LocalTime time) {
-        return new MessageWeeklyPolicy(dayOfWeek, time);
+    public static MessageWeeklyPolicy of(List<Schedule> schedules) {
+        return new MessageWeeklyPolicy(schedules);
     }
 
     public boolean isTodaySchedule(LocalDateTime now) {
-        return now.getDayOfWeek() == dayOfWeek && now.toLocalTime().equals(time);
+        return schedules.stream().anyMatch(schedule -> schedule.matches(now));
     }
 
     public LocalDateTime nextScheduleDate(LocalDateTime now) {
-        LocalDateTime next = now.with(TemporalAdjusters.nextOrSame(dayOfWeek)).with(time);
-        if (next.isBefore(now)) {
-            return next.plusWeeks(1);
-        }
-        return next;
+        return schedules.stream()
+                .map(schedule -> schedule.nextScheduleAfter(now))
+                .min(LocalDateTime::compareTo)
+                .orElseThrow(() -> new MessageException(MessageErrorCode.INVALID_SCHEDULE));
     }
 }
-
