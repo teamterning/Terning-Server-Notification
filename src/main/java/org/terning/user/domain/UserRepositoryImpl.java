@@ -1,6 +1,7 @@
 package org.terning.user.domain;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -24,5 +25,16 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
                 .stream()
                 .collect(Collectors.toMap(User::getId, Function.identity()));
     }
+
+    @Override
+    public Optional<User> findByOUserId(Long oUserId) {
+        QUser user = QUser.user;
+        return Optional.ofNullable(
+                queryFactory.selectFrom(user)
+                        .where(user.oUserId.eq(oUserId))
+                        .fetchOne()
+        );
+    }
+
 }
 
