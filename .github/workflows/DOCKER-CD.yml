@@ -63,6 +63,11 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
+      - name: 🔍 firebase_key.json 확인
+        run: | 
+          echo "$FIREBASE_SERVICE_KEY" | base64 -d > ~/firebase_key.json
+          cat ~/firebase_key.json
+
       - name: docker 컨테이너 실행
         uses: appleboy/ssh-action@master
         with:
@@ -71,8 +76,7 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           envs: FIREBASE_SERVICE_KEY
           script: |
-            echo "${{ secrets.FIREBASE_SERVICE_KEY }}" > ~/firebase_key.json
+            echo "$FIREBASE_SERVICE_KEY" | base64 -d > ~/firebase_key.json
             chmod 600 ~/firebase_key.json
-
-            cd ~
-            ./deploy.sh
+            chmod +x ~/deploy.sh
+            ~/deploy.sh
