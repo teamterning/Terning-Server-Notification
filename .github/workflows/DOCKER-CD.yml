@@ -67,8 +67,8 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
-          envs: FIREBASE_SERVICE_KEY_BASE64
           script: |
             cd ~
+            echo '${{ secrets.FIREBASE_SERVICE_KEY_BASE64 }}' > firebase_key.txt
             chmod +x ./deploy.sh
-            ./deploy.sh
+            FIREBASE_SERVICE_KEY_BASE64="$(cat firebase_key.txt)" ./deploy.sh
