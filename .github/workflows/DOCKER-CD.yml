@@ -69,6 +69,8 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
+          envs: FIREBASE_SERVICE_KEY
           script: |
+            export firebase_service_key='${{ secrets.FIREBASE_SERVICE_KEY }}'
             cd ~
             ./deploy.sh
