@@ -69,12 +69,6 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
-          envs: FIREBASE_SERVICE_KEY_BASE64
           script: |
-            echo "🔓 base64 디코딩"
-            export firebase_service_key=$(echo "$FIREBASE_SERVICE_KEY_BASE64" | base64 -d)
-
-            echo "🚀 deploy.sh 실행"
-            export firebase_service_key="$firebase_service_key"
-            chmod +x ~/deploy.sh
-            ~/deploy.sh
+            cd ~
+            ./deploy.sh
