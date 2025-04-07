@@ -25,7 +25,6 @@ jobs:
           mkdir -p ./src/main/resources && cd $_
           touch ./application.yml
           echo "${{ secrets.YML }}" > ./application.yml
-          cat ./application.yml
         working-directory: ${{ env.working-directory }}
 
       - name: application-prod.yml 생성
@@ -69,6 +68,6 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           script: |
             cd ~
-            echo '${{ secrets.FIREBASE_SERVICE_KEY_BASE64 }}' > firebase_key.txt
+            echo "FIREBASE_SERVICE_KEY_BASE64=${{ secrets.FIREBASE_SERVICE_KEY_BASE64 }}" > .env
             chmod +x ./deploy.sh
-            FIREBASE_SERVICE_KEY_BASE64="$(cat firebase_key.txt)" ./deploy.sh
+            ./deploy.sh
