@@ -71,6 +71,11 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           envs: FIREBASE_SERVICE_KEY
           script: |
-            export firebase_service_key='${{ secrets.FIREBASE_SERVICE_KEY }}'
+            echo "> firebase_service_key 전달 준비"
+            echo "${{ secrets.FIREBASE_SERVICE_KEY }}" > ~/firebase_key.json
+
+            export firebase_service_key="$(cat ~/firebase_key.json)"
+            echo "> firebase_service_key 일부 확인: ${firebase_service_key:0:100}..."
+            
             cd ~
             ./deploy.sh
