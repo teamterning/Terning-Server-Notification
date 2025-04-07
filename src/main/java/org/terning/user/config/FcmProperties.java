@@ -4,14 +4,10 @@ import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
 
+@Component
 @ConfigurationProperties(prefix = "firebase")
 @Getter
+@Setter
 public class FcmProperties {
-
-    private final String serviceKey;
-
-    @ConstructorBinding
-    public FcmProperties(String serviceKey){
-        this.serviceKey = serviceKey;
-    }
+    private String serviceKey;
 }
