@@ -12,6 +12,6 @@ public class FcmPropertyTester implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        System.out.println("🔥 FCM KEY: " + fcmProperties.getServiceKeyPath());
+        System.out.println("🔥 FCM KEY: " + fcmProperties.getServiceKey());
     }
 }
