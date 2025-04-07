@@ -71,10 +71,8 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           envs: FIREBASE_SERVICE_KEY
           script: |
-            echo "${{ secrets.FIREBASE_SERVICE_KEY }}" > firebase_key.json
-            export FIREBASE_SERVICE_KEY=$(cat firebase_key.json)
-            echo "firebase_service_key 일부 확인: ${FIREBASE_SERVICE_KEY:0:100}..."
-            echo "export firebase_service_key='${FIREBASE_SERVICE_KEY}'" > ~/.env_firebase
-            
-            chmod +x ~/deploy.sh
-            source ~/.env_firebase && ~/deploy.sh
+            echo "${{ secrets.FIREBASE_SERVICE_KEY }}" > ~/firebase_key.json
+            chmod 600 ~/firebase_key.json
+
+            cd ~
+            ./deploy.sh
