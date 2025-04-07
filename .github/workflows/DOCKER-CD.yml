@@ -72,5 +72,4 @@ jobs:
           envs: FIREBASE_SERVICE_KEY
           script: |
             cd ~
-            FIREBASE_SERVICE_KEY = "${{ secrets.FIREBASE_SERVICE_KEY }}"
             ./deploy.sh
