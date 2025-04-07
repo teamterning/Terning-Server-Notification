@@ -8,10 +8,10 @@ import org.springframework.boot.context.properties.bind.ConstructorBinding;
 @Getter
 public class FcmProperties {
 
-    private final String serviceKey;
+    private final String serviceKeyPath;
 
     @ConstructorBinding
-    public FcmProperties(String serviceKey){
-        this.serviceKey = serviceKey;
+    public FcmProperties(String serviceKeyPath){
+        this.serviceKeyPath = serviceKeyPath;
     }
 }
