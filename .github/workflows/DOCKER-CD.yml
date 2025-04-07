@@ -2,7 +2,7 @@ name: DOCKER-CD
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   ci:
@@ -25,6 +25,7 @@ jobs:
           mkdir -p ./src/main/resources && cd $_
           touch ./application.yml
           echo "${{ secrets.YML }}" > ./application.yml
+          cat ./application.yml
         working-directory: ${{ env.working-directory }}
 
       - name: application-prod.yml 생성
@@ -39,6 +40,7 @@ jobs:
           chmod +x gradlew
           ./gradlew build -x test
         working-directory: ${{ env.working-directory }}
+        shell: bash
 
       - name: docker 로그인
         uses: docker/setup-buildx-action@v2.9.1
@@ -66,8 +68,10 @@ jobs:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
+          envs: FIREBASE_SERVICE_KEY_BASE64
           script: |
             cd ~
-            echo "FIREBASE_SERVICE_KEY_BASE64=${{ secrets.FIREBASE_SERVICE_KEY_BASE64 }}" > .env
+            echo "${{ secrets.FIREBASE_SERVICE_KEY_BASE64 }}" > firebase_key_base64.txt
+            export FIREBASE_SERVICE_KEY_BASE64=$(cat firebase_key_base64.txt)
             chmod +x ./deploy.sh
             ./deploy.sh
