@@ -73,6 +73,5 @@ jobs:
           script: |
             echo "${{ secrets.FIREBASE_SERVICE_KEY }}" > ~/firebase_key.json
             chmod 600 ~/firebase_key.json
-
-            cd ~
-            ./deploy.sh
+            chmod +x ~/deploy.sh
+            ~/deploy.sh
