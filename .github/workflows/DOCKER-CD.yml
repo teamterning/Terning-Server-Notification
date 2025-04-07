@@ -70,5 +70,6 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           script: |
             export FIREBASE_SERVICE_KEY_BASE64="${{ secrets.FIREBASE_SERVICE_KEY_BASE64 }}"
+            echo "[DEBUG] ENV VAR LENGTH: ${#FIREBASE_SERVICE_KEY_BASE64}"
             chmod +x ./deploy.sh
             ./deploy.sh
