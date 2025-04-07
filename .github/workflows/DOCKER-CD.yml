@@ -71,5 +71,6 @@ jobs:
           key: ${{ secrets.SERVER_KEY }}
           envs: FIREBASE_SERVICE_KEY
           script: |
+            export FIREBASE_SERVICE_KEY='${{ secrets.FIREBASE_SERVICE_KEY }}'
             cd ~
             ./deploy.sh
