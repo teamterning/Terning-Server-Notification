@@ -23,6 +23,7 @@ public class FcmConfig {
     public void init() {
         try {
             String base64EncodedServiceKey = fcmProperties.getServiceKey();
+            log.info("🔥 FCM serviceKey value: '{}'", base64EncodedServiceKey);
     
             if (base64EncodedServiceKey == null || base64EncodedServiceKey.isBlank()) {
                 throw new IllegalStateException("Firebase service key is missing or blank.");
