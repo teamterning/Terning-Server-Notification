@@ -12,31 +12,31 @@ import org.springframework.context.annotation.Configuration;
 import org.terning.global.constant.Encoding;
 import org.terning.user.common.log.FcmLogMessages;
 
-@Configuration
+@Component
 @RequiredArgsConstructor
 @Slf4j
-public class FcmConfig {
+public class FcmInitializer implements ApplicationListener<ApplicationReadyEvent> {
 
     private final FcmProperties fcmProperties;
 
-    @PostConstruct
-    public void init() {
+    @Override
+    public void onApplicationEvent(ApplicationReadyEvent event) {
         try {
             String base64EncodedServiceKey = fcmProperties.getServiceKey();
-            log.info("🔥 FCM serviceKey value: '{}'", base64EncodedServiceKey);
-    
+
+            log.info("🔥 Firebase key length: {}", base64EncodedServiceKey != null ? base64EncodedServiceKey.length() : "null");
+
             if (base64EncodedServiceKey == null || base64EncodedServiceKey.isBlank()) {
                 throw new IllegalStateException("Firebase service key is missing or blank.");
             }
-    
+
             byte[] decoded = java.util.Base64.getDecoder().decode(base64EncodedServiceKey);
-    
+
             try (ByteArrayInputStream serviceAccountStream = new ByteArrayInputStream(decoded)) {
-    
                 FirebaseOptions options = FirebaseOptions.builder()
                         .setCredentials(GoogleCredentials.fromStream(serviceAccountStream))
                         .build();
-    
+
                 if (FirebaseApp.getApps().isEmpty()) {
                     FirebaseApp.initializeApp(options);
                     log.info(FcmLogMessages.INIT_SUCCESS);
