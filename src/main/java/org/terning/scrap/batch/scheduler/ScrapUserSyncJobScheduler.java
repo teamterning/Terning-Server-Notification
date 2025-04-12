@@ -17,7 +17,7 @@ public class ScrapUserSyncJobScheduler {
 
     private static final String LOG_SUCCESS = "[스크랩 배치] 동기화 작업 실행 완료";
     private static final String RUN_ID = "run.id";
-    private static final String CRON_SCHEDULE = "0 30 20 * * *";
+    private static final String CRON_SCHEDULE = "0 0 3 * * *";
 
     private final JobLauncher jobLauncher;
     private final Job scrapUserSyncJob;
