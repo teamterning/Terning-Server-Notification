@@ -197,4 +197,9 @@ public class UserRepositoryTest implements UserRepository, UserRepositoryCustom 
     public Page<User> findAll(Pageable pageable) {
         return Page.empty();
     }
+
+    @Override
+    public Optional<User> findByOUserId(Long oUserId) {
+        return Optional.empty();
+    }
 }

@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.terning.fcm.validate.FcmTokenValidator;
 import org.terning.global.entity.BaseEntity;
 import org.terning.notification.domain.Notification;
@@ -35,6 +36,7 @@ public class User extends BaseEntity {
 
     private Long oUserId;
 
+    @Setter
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "name"))
     private UserName name;
@@ -43,6 +45,7 @@ public class User extends BaseEntity {
     @AttributeOverride(name = "value", column = @Column(name = "token"))
     private FcmToken token;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     private PushNotificationStatus pushStatus;
 
@@ -112,4 +115,5 @@ public class User extends BaseEntity {
     public void updateFcmToken(String newTokenValue) {
         this.token = token.updateValue(newTokenValue);
     }
+
 }

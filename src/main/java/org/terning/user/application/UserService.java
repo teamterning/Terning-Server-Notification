@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.terning.user.application.fcmtoken.update.FcmTokenUpdateService;
 import org.terning.user.application.fcmtoken.validate.FcmTokenValidateService;
+import org.terning.user.common.failure.UserErrorCode;
+import org.terning.user.common.failure.UserException;
 import org.terning.user.domain.User;
 import org.terning.user.domain.UserRepository;
 import org.terning.user.domain.vo.AccountStatus;
@@ -46,5 +48,28 @@ public class UserService {
                 accountStatus
         );
         userRepository.save(user);
+    }
+
+    @Transactional
+    public void updatePushStatus(Long oUserId, String newPushStatus) {
+        User user = userRepository.findByOUserId(oUserId)
+                .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
+        user.setPushStatus(PushNotificationStatus.from(newPushStatus));
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void updateUserName(Long oUserId, String newName) {
+        User user = userRepository.findByOUserId(oUserId)
+                .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
+        user.setName(UserName.from(newName));
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteUser(Long oUserId) {
+        User user = userRepository.findByOUserId(oUserId)
+                .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
+        userRepository.delete(user);
     }
 }

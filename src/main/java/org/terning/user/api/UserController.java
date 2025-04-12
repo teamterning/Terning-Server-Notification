@@ -48,5 +48,31 @@ public class UserController {
         userService.createUser(request);
         return ResponseEntity.ok(SuccessResponse.of(UserSuccessCode.USER_CREATED));
     }
+
+    @PutMapping("/{userId}/push-status")
+    public ResponseEntity<SuccessResponse<Void>> updatePushStatus(
+            @PathVariable Long userId,
+            @RequestBody String newPushStatus
+    ) {
+        userService.updatePushStatus(userId, newPushStatus);
+        return ResponseEntity.ok(SuccessResponse.of(UserSuccessCode.PUSH_STATUS_UPDATED));
+    }
+
+    @PutMapping("/{userId}/name")
+    public ResponseEntity<SuccessResponse<Void>> updateUserName(
+            @PathVariable Long userId,
+            @RequestBody String newName
+    ) {
+        userService.updateUserName(userId, newName);
+        return ResponseEntity.ok(SuccessResponse.of(UserSuccessCode.USER_NAME_UPDATED));
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<SuccessResponse<Void>> deleteUser(
+            @PathVariable Long userId
+    ) {
+        userService.deleteUser(userId);
+        return ResponseEntity.ok(SuccessResponse.of(UserSuccessCode.USER_DELETED));
+    }
 }
 
