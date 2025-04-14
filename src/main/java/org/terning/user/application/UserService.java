@@ -32,8 +32,11 @@ public class UserService {
     }
 
     @Transactional
-    public void updateFcmToken(Long userId, UpdateFcmTokenRequest request) {
-        fcmTokenUpdateService.updateFcmToken(userId, request.newToken());
+    public void updateFcmToken(Long oUserId, String newToken) {
+        User user = userRepository.findByOUserId(oUserId)
+                .orElseThrow(() -> new UserException(UserErrorCode.USER_NOT_FOUND));
+        user.updateFcmToken(newToken);
+        userRepository.save(user);
     }
 
     @Transactional
