@@ -36,6 +36,7 @@ public class UserService {
         fcmTokenUpdateService.updateFcmToken(userId, request.newToken());
     }
 
+    @Transactional
     public void createUser(CreateUserRequest request) {
         PushNotificationStatus pushStatus = PushNotificationStatus.from(request.pushStatus());
         AccountStatus accountStatus = AccountStatus.from(request.accountStatus());
