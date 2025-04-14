@@ -10,7 +10,6 @@ import org.terning.global.entity.BaseEntity;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "scraps")
 public class Scrap extends BaseEntity {
 
     @Id
