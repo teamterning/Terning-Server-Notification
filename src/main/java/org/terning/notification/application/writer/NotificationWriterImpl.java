@@ -37,11 +37,15 @@ public class NotificationWriterImpl implements NotificationWriter {
     }
 
     private List<User> fetchTargetUsers(MessageTargetType targetType) {
-        return switch (targetType) {
+        List<User> users = switch (targetType) {
             case SCRAPPED_USER -> scrapRepository.findDistinctScrappedUsers();
             case ALL_USERS -> userRepository.findAll();
             default -> throw new NotificationException(NotificationErrorCode.INVALID_TARGET_TYPE);
         };
+
+        return users.stream()
+                .filter(User::canReceivePushNotification)
+                .toList();
     }
 
     private List<Notification> createNotifications(List<User> users, MessageTemplateType template, ScheduledTime sendTime) {
