@@ -32,7 +32,12 @@ public class NotificationWriterImpl implements NotificationWriter {
     @Transactional
     public void write(MessageTemplateType template, ScheduledTime sendTime) {
         List<User> targetUsers = fetchTargetUsers(template.targetType());
-        List<Notification> notifications = createNotifications(targetUsers, template, sendTime);
+        List<User> filteredUsers = targetUsers.stream()
+                .filter(user -> user.getToken() != null
+                        && user.getToken().value() != null
+                        && !user.getToken().value().trim().isEmpty())
+                .toList();
+        List<Notification> notifications = createNotifications(filteredUsers, template, sendTime);
         saveNotifications(notifications);
     }
 
