@@ -32,16 +32,25 @@ public class NotificationWriterImpl implements NotificationWriter {
     @Transactional
     public void write(MessageTemplateType template, ScheduledTime sendTime) {
         List<User> targetUsers = fetchTargetUsers(template.targetType());
-        List<Notification> notifications = createNotifications(targetUsers, template, sendTime);
+        List<User> filteredUsers = targetUsers.stream()
+                .filter(user -> user.getToken() != null)
+                .filter(user -> user.getToken().value() != null)
+                .filter(user -> !user.getToken().value().trim().isEmpty())
+                .toList();
+        List<Notification> notifications = createNotifications(filteredUsers, template, sendTime);
         saveNotifications(notifications);
     }
 
     private List<User> fetchTargetUsers(MessageTargetType targetType) {
-        return switch (targetType) {
+        List<User> users = switch (targetType) {
             case SCRAPPED_USER -> scrapRepository.findDistinctScrappedUsers();
             case ALL_USERS -> userRepository.findAll();
             default -> throw new NotificationException(NotificationErrorCode.INVALID_TARGET_TYPE);
         };
+
+        return users.stream()
+                .filter(User::canReceivePushNotification)
+                .toList();
     }
 
     private List<Notification> createNotifications(List<User> users, MessageTemplateType template, ScheduledTime sendTime) {

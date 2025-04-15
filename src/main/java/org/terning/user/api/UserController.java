@@ -31,12 +31,12 @@ public class UserController {
         );
     }
 
-    @PostMapping("/{userId}/fcm-tokens")
+    @PutMapping("/{userId}/fcm-tokens")
     public ResponseEntity<SuccessResponse<Void>> updateFcmToken(
             @PathVariable Long userId,
-            @RequestBody UpdateFcmTokenRequest request
+            @RequestBody String newToken
     ) {
-        userService.updateFcmToken(userId, request);
+        userService.updateFcmToken(userId, newToken);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(SuccessResponse.of(UserSuccessCode.FCM_TOKEN_UPDATED));
     }

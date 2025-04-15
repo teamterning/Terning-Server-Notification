@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "notifications")
 public class Notification extends BaseEntity {
 
     @Id
