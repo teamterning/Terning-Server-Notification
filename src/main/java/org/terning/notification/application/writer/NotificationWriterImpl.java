@@ -33,9 +33,9 @@ public class NotificationWriterImpl implements NotificationWriter {
     public void write(MessageTemplateType template, ScheduledTime sendTime) {
         List<User> targetUsers = fetchTargetUsers(template.targetType());
         List<User> filteredUsers = targetUsers.stream()
-                .filter(user -> user.getToken() != null
-                        && user.getToken().value() != null
-                        && !user.getToken().value().trim().isEmpty())
+                .filter(user -> user.getToken() != null)
+                .filter(user -> user.getToken().value() != null)
+                .filter(user -> !user.getToken().value().trim().isEmpty())
                 .toList();
         List<Notification> notifications = createNotifications(filteredUsers, template, sendTime);
         saveNotifications(notifications);
