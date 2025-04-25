@@ -6,6 +6,7 @@ import com.google.firebase.messaging.Message;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.terning.message.domain.enums.ViewType;
 import org.terning.notification.domain.Notification;
 import org.terning.user.domain.User;
 
@@ -20,8 +21,12 @@ public class FcmPushSenderImpl implements FcmPushSender {
             User user = notification.getUser();
             String token = user.getToken().value();
 
+            ViewType viewType = ViewType.fromTemplate(notification.getMessage().getMessageTemplateType());
+
             Message fcmMessage = Message.builder()
                     .setToken(token)
+                    .putData("token", token)
+                    .putData("type", notification.getMessage().getViewType())
                     .putData("title", notification.getMessage().getMain())
                     .putData("body", notification.getMessage().getSub())
                     .build();
