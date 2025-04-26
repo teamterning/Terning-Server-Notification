@@ -26,15 +26,20 @@ public class Message extends BaseEntity {
 
     private String viewType;
 
-    private Message(MessageTemplateType messageTemplateType, String main, String sub, String viewType) {
+    private String imageUrl;
+
+    private Message(MessageTemplateType messageTemplateType, String main, String sub,
+                    String viewType, String imageUrl) {
         this.messageTemplateType = messageTemplateType;
         this.main = main;
         this.sub = sub;
         this.viewType = viewType;
+        this.imageUrl = imageUrl;
     }
 
-    public static Message of(MessageTemplateType messageTemplateType, String main, String sub) {
-        return new Message(messageTemplateType, main, sub, ViewType.fromTemplate(messageTemplateType).name());
+    public static Message of(MessageTemplateType messageTemplateType, String main, String sub, String imageUrl) {
+        return new Message(messageTemplateType, main, sub,
+                ViewType.fromTemplate(messageTemplateType).name(), imageUrl);
     }
 
     public boolean isSameType(MessageTemplateType other) {
