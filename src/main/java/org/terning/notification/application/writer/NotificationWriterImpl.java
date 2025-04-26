@@ -69,7 +69,8 @@ public class NotificationWriterImpl implements NotificationWriter {
         return Message.of(
                 template,
                 template.main(context),
-                template.sub(context)
+                template.sub(context),
+                template.getImageUrl()
         );
     }
 
