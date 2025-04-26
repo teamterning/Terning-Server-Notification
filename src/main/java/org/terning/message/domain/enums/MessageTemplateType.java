@@ -42,6 +42,17 @@ public enum MessageTemplateType {
                 .orElseThrow(() -> new NotificationException(NotificationErrorCode.INVALID_TEMPLATE_TYPE));
     }
 
+    public String getImageUrl() {
+        return switch (this) {
+            case INTERESTED_ANNOUNCEMENT_REMINDER ->
+                    "https://your-cdn.com/images/interested_announcement.png";
+            case RECENTLY_POSTED_INTERNSHIP_RECOMMENDATION ->
+                    "https://your-cdn.com/images/recently_posted_internship.png";
+            case TRENDING_INTERNSHIP_ALERT ->
+                    "https://your-cdn.com/images/trending_internship.png";
+        };
+    }
+
     public String main(Map<String, String> params) {
         return mainMessage.format(params);
     }
