@@ -21,14 +21,12 @@ public class FcmPushSenderImpl implements FcmPushSender {
             User user = notification.getUser();
             String token = user.getToken().value();
 
-            ViewType viewType = ViewType.fromTemplate(notification.getMessage().getMessageTemplateType());
-
             Message fcmMessage = Message.builder()
                     .setToken(token)
-                    .putData("token", token)
                     .putData("type", notification.getMessage().getViewType())
                     .putData("title", notification.getMessage().getMain())
                     .putData("body", notification.getMessage().getSub())
+                    .putData("imageUrl", notification.getMessage().getImageUrl())
                     .build();
 
             String response = FirebaseMessaging.getInstance().send(fcmMessage);
