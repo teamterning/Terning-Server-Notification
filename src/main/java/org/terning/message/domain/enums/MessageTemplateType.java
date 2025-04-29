@@ -45,11 +45,11 @@ public enum MessageTemplateType {
     public String getImageUrl() {
         return switch (this) {
             case INTERESTED_ANNOUNCEMENT_REMINDER ->
-                    "https://your-cdn.com/images/interested_announcement.png";
+                    "https://github.com/teamterning/Terning-Banner/blob/main/imageUrl/image_scrap.png";
             case RECENTLY_POSTED_INTERNSHIP_RECOMMENDATION ->
-                    "https://your-cdn.com/images/recently_posted_internship.png";
+                    "https://github.com/teamterning/Terning-Banner/blob/main/imageUrl/image_home.png";
             case TRENDING_INTERNSHIP_ALERT ->
-                    "https://your-cdn.com/images/trending_internship.png";
+                    "https://github.com/teamterning/Terning-Banner/blob/main/imageUrl/image_search.png";
         };
     }
 
