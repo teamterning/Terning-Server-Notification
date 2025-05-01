@@ -1,5 +1,8 @@
 package org.terning.fcm.application;
 
+import com.google.firebase.messaging.ApnsConfig;
+import com.google.firebase.messaging.Aps;
+import com.google.firebase.messaging.ApsAlert;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
@@ -21,12 +24,32 @@ public class FcmPushSenderImpl implements FcmPushSender {
             User user = notification.getUser();
             String token = user.getToken().value();
 
+            String title = notification.getMessage().getMain();
+            String body = notification.getMessage().getSub();
+            String type = notification.getMessage().getViewType();
+            String imageUrl = notification.getMessage().getImageUrl();
+
+            ApsAlert apsAlert = ApsAlert.builder()
+                    .setTitle(title)
+                    .setBody(body)
+                    .build();
+
+            Aps aps = Aps.builder()
+                    .setAlert(apsAlert)
+                    .setMutableContent(true)
+                    .build();
+
+            ApnsConfig apnsConfig = ApnsConfig.builder()
+                    .setAps(aps)
+                    .build();
+
             Message fcmMessage = Message.builder()
                     .setToken(token)
-                    .putData("type", notification.getMessage().getViewType())
-                    .putData("title", notification.getMessage().getMain())
-                    .putData("body", notification.getMessage().getSub())
-                    .putData("imageUrl", notification.getMessage().getImageUrl())
+                    .setApnsConfig(apnsConfig)
+                    .putData("title", title)
+                    .putData("body", body)
+                    .putData("type", type)
+                    .putData("imageUrl", imageUrl)
                     .build();
 
             String response = FirebaseMessaging.getInstance().send(fcmMessage);
