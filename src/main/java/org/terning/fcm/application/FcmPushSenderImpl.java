@@ -37,6 +37,8 @@ public class FcmPushSenderImpl implements FcmPushSender {
             Aps aps = Aps.builder()
                     .setAlert(apsAlert)
                     .setMutableContent(true)
+                    .putCustomData("type", type)
+                    .putCustomData("imageUrl", imageUrl)
                     .build();
 
             ApnsConfig apnsConfig = ApnsConfig.builder()
@@ -51,6 +53,8 @@ public class FcmPushSenderImpl implements FcmPushSender {
                     .putData("type", type)
                     .putData("imageUrl", imageUrl)
                     .build();
+
+            log.info("📦 전송된 FCM 메시지: {}", fcmMessage);
 
             String response = FirebaseMessaging.getInstance().send(fcmMessage);
             log.info("FCM 메세지 전송 성공, 응답 ID: {}", response);
