@@ -31,7 +31,7 @@ public class ScrapRepositoryImpl implements ScrapRepositoryCustom {
         return queryFactory
                 .selectDistinct(scrap.user)
                 .from(scrap)
-                .join(scrap.user, user).fetchJoin()
+                .join(scrap.user, user)
                 .where(scrap.status.eq(ScrapStatus.SCRAPPED))
                 .fetch();
     }
