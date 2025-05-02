@@ -18,43 +18,35 @@ public class ScrapSyncManager {
     private final UserRepository userRepository;
     private final ScrapRepository scrapRepository;
 
-    public void sync(List<Long> userIds) {
-        List<Long> distinctUserIds = userIds.stream().distinct().toList();
+    public void sync(List<Long> oUserIds) {
+        List<Long> distinctOUserIds = oUserIds.stream().distinct().toList();
+        Map<Long, User> usersByOUserId = userRepository.findUsersByOUserIds(distinctOUserIds);
 
-        Map<Long, User> usersById = userRepository.findUsersByIds(distinctUserIds);
-        Map<Long, Scrap> scrapsByUserId = scrapRepository.findScrapsByUserIds(distinctUserIds).stream()
+        List<Long> internalUserIds = usersByOUserId.values().stream()
+                .map(User::getId)
+                .toList();
+
+        Map<Long, Scrap> scrapsByUserId = scrapRepository.findScrapsByUserIds(internalUserIds).stream()
                 .collect(Collectors.toMap(scrap -> scrap.getUser().getId(), Function.identity()));
 
-        List<Scrap> scrapsToPersist = distinctUserIds.stream()
-                .map(userId -> createOrUpdateScrap(userId, usersById, scrapsByUserId))
+        List<Scrap> scrapsToPersist = distinctOUserIds.stream()
+                .map(oUserId -> {
+                    User user = usersByOUserId.get(oUserId);
+                    if (user == null) return null;
+
+                    Scrap existingScrap = scrapsByUserId.get(user.getId());
+                    if (existingScrap == null) return Scrap.of(user);
+                    if (existingScrap.isUnscrapped()) {
+                        existingScrap.scrap();
+                        return existingScrap;
+                    }
+                    return null;
+                })
                 .filter(Objects::nonNull)
                 .toList();
 
         if (!scrapsToPersist.isEmpty()) {
             scrapRepository.saveAll(scrapsToPersist);
         }
-    }
-
-    private Scrap createOrUpdateScrap(
-            Long userId,
-            Map<Long, User> usersById,
-            Map<Long, Scrap> scrapsByUserId
-    ) {
-        User user = usersById.get(userId);
-        if (user == null) {
-            return null;
-        }
-
-        Scrap existingScrap = scrapsByUserId.get(userId);
-        if (existingScrap == null) {
-            return Scrap.of(user);
-        }
-
-        if (existingScrap.isUnscrapped()) {
-            existingScrap.scrap();
-            return existingScrap;
-        }
-
-        return null;
     }
 }
