@@ -7,6 +7,8 @@ import java.util.Optional;
 public interface UserRepositoryCustom {
     Map<Long, User> findUsersByIds(List<Long> userIds);
 
+    Map<Long, User> findUsersByOUserIds(List<Long> oUserIds);
+
     Optional<User> findByOUserId(Long oUserId);
 }
 
