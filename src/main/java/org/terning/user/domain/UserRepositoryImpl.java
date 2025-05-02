@@ -27,6 +27,16 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     }
 
     @Override
+    public Map<Long, User> findUsersByOUserIds(List<Long> oUserIds) {
+        return queryFactory
+                .selectFrom(QUser.user)
+                .where(QUser.user.oUserId.in(oUserIds))
+                .fetch()
+                .stream()
+                .collect(Collectors.toMap(User::getOUserId, Function.identity()));
+    }
+
+    @Override
     public Optional<User> findByOUserId(Long oUserId) {
         QUser user = QUser.user;
         return Optional.ofNullable(
