@@ -159,3 +159,13 @@ gradle-app.setting
 ### Gradle Patch ###
 # Java heap dump
 *.hprof
+
+## Custom
+*.idea
+
+# application.yml
+src/main/resources/application.yml
+src/main/resources/application-dev.yml
+
+# Q-Class
+src/main/generated
