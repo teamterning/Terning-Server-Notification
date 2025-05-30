@@ -19,7 +19,6 @@ public class FcmPushScheduler {
     private final RestTemplate restTemplate;
 
     private static final String BASE_URL = "http://13.209.210.3/api/v1";
-//    private static final String LOCAL_URL = "http://localhost:8081/api/v1";
 
     private void callPost(String path) {
         HttpHeaders headers = new HttpHeaders();
@@ -89,15 +88,4 @@ public class FcmPushScheduler {
         callPost("/notification/create", "TRENDING_INTERNSHIP_ALERT");
         callPost("/push-notifications/send-all");
     }
-
-    // 테스트용
-//    @Scheduled(cron = "0 34 3 * * ?", zone = "Asia/Seoul")
-//    public void testPush() {
-//        log.info("테스트 푸시 시작");
-//
-//        callPost("/notification/create", "RECENTLY_POSTED_INTERNSHIP_RECOMMENDATION");
-//        callPost("/push-notifications/send-all");
-//
-//        log.info("테스트 푸시 완료");
-//    }
 }
