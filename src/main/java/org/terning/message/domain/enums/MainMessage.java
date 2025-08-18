@@ -9,9 +9,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 public enum MainMessage implements MessageTemplate {
 
-    INTERESTED_ANNOUNCEMENT("🚨앗, 공고 마감 직전!", false),
-    RECENTLY_POSTED_INTERNSHIP("🔫갓 나온 공고, 지금 확인!", false),
-    TRENDING_INTERNSHIP("😱나 빼고 다 보고 간 인기공고…..", false);
+    INTERESTED_ANNOUNCEMENT("🚨 앗, 공고 마감 직전!", false),
+    RECENTLY_POSTED_INTERNSHIP("🔫 갓 나온 인턴 공고, 지금 확인!", false),
+    TRENDING_INTERNSHIP("😱 나 빼고 다 보고 간 인기공고…..", false);
 
     private final String template;
     private final boolean requiresFormatting;
