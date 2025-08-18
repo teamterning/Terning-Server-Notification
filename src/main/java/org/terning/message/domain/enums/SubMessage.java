@@ -9,9 +9,9 @@ import java.util.Map;
 @RequiredArgsConstructor
 public enum SubMessage implements MessageTemplate {
 
-    INTERESTED_ANNOUNCEMENT_DETAIL("스크랩한 인턴 공고의 마감 일정, {username}님의 캘린더에서 한눈에 확인해 볼까요!", true),
-    RECENTLY_POSTED_INTERNSHIP_DETAIL("{username}님의 원하는 직무와 계획에 맞춰, 딱 맞는 새 인턴 공고를 골라볼 수 있어요!", true),
-    TRENDING_INTERNSHIP_DETAIL("{username}님을 위해 터닝이가 인기 많은 인턴 공고를 가져왔어요! 놓치기 전에 살펴보세요.", true),
+    INTERESTED_ANNOUNCEMENT_DETAIL("곧 마감하는 공고 일정, 내 캘린더에서 확인해 보세요", false),
+    RECENTLY_POSTED_INTERNSHIP_DETAIL("{username}님의 계획에 맞춰, 딱 맞는 인턴 공고를 골라볼 수 있어요!", true),
+    TRENDING_INTERNSHIP_DETAIL("{username}을 위해 준비한 이번주 인기 공고, 놓치기 전에 살펴보세요!", true),
 
     ;
 
