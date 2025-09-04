@@ -39,7 +39,7 @@ public class FcmPushScheduler {
     }
 
     // 2. 매주 목/토 13:00 최근 공고 알림 생성 + 전송
-    @Scheduled(cron = "0 35 14 ? * THU,SAT", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 13 ? * THU,SAT", zone = "Asia/Seoul")
     public void sendRecentlyPostedInternshipRecommendation() {
         log.info("최근 공고 알림 생성을 시작합니다.");
         createAndSendNotifications("RECENTLY_POSTED_INTERNSHIP_RECOMMENDATION");
