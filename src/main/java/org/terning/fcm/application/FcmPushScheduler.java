@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,14 +20,15 @@ public class FcmPushScheduler {
 
     private final RestTemplate restTemplate;
 
-    private static final String BASE_URL = "http://13.209.210.3/api/v1";
+    @Value("${ops.server.url}/api/v1")
+    private String base_url;
 
     private void callPost(String path) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<Void> entity = new HttpEntity<>(headers);
 
-        String url = BASE_URL + path;
+        String url = base_url + path;
         try {
             restTemplate.postForEntity(url, entity, String.class);
             log.info("POST 요청 성공: {}", url);
@@ -42,7 +45,7 @@ public class FcmPushScheduler {
         bM.put("template", template);
 
         HttpEntity<Map<String, String>> entity = new HttpEntity<>(bM, headers);
-        String url = BASE_URL + path;
+        String url = base_url + path;
 
         try {
             restTemplate.postForEntity(url, entity, String.class);
@@ -53,7 +56,7 @@ public class FcmPushScheduler {
     }
 
     private void callGet(String path) {
-        String url = BASE_URL + path;
+        String url = base_url + path;
         try {
             restTemplate.getForEntity(url, String.class);
             log.info("GET 요청 성공: {}", url);
